@@ -58,4 +58,7 @@ To obtain the URL of your ActiON Dashboard
 * Back in the tab that had the SmartApp details, click "Trigger Now" button on right side under Preferences
 * The ActiON Dashboard URL will be printed in the logs
 
-
+OAuth
+=====
+* If you omit the access_token from the URL, you will be prompted to login. This will authenticate the session. I do not know how long the session stays valid.
+* If you need to invalidate the access_token, you can uninstall the app or change OAuth details in the App Settings.
