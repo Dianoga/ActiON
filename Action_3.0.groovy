@@ -1,13 +1,17 @@
 /**
-* ActiON, formerly Web Dashboard 3
-*
-* Installation Instructions
-* - Open the logs first
-* - Install app as usual via mobile device.
-* - Don't forget to enable Oath in the SmartApp setup!
-* - Check the logs to see your URL or tap app icon in Mobile App to print the URL to the logs again.
+ *  ActiON Dashboard 3.0
  *
- *  Copyright 2014 Alex Malikov
+ *  ActiON Dashboard is a web application to contol and view status of your devices. 
+ *  It is optimized for mobile devices as well as large screens.
+ *  Once the dashboard url is generated, it could be used in any modern browser.
+ *  There is no need to install SmartThings Mobile application on the device that will run the dashboard.
+ *
+ *  http://github.com/625alex/ActiON
+ *
+ *  Donations accepted via PayPal at alex.smart.things@gmail.com
+ *
+ *  Copyright © 2014 Alex Malikov
+ *
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -20,18 +24,29 @@
  *
  */
 definition(
-    name: "ActiON",
+    name: "ActiON Dashboard",
     namespace: "625alex",
     author: "Alex Malikov",
     description: "Self contained web dashboard.",
     category: "Convenience",
-    iconUrl: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
-    iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png",
+    iconUrl: "https://s3.amazonaws.com/smartthings-device-icons/unknown/thing/thing-circle.png",
+    iconX2Url: "https://s3.amazonaws.com/smartthings-device-icons/unknown/thing/thing-circle@2x.png",
     oauth: true)
 
 
 preferences {
 	page(name: "selectDevices", title: "Devices", install: false, unintall: true, nextPage: "selectPhrases") {
+    
+        section("About") {
+            paragraph "ActiON Dashboard is a web application dashboard for your devices. \n" +
+            "There is no need to install SmartThings Mobile application on devices that will run ActiON Dashboard. \n" +
+            "Tap SmartApp icon to print the ActiON Dashboard URL to the logs."
+            paragraph "Version 3.0. \n" + 
+            "http://github.com/625alex/ActiON \n\n" +
+            "Donations accepted via PayPal at alex.smart.things@gmail.com. \n" +
+            "Copyright © 2014 Alex Malikov"
+        }
+        
     	section("Allow control of these things...") {
             input "switches", "capability.switch", title: "Which Switches?", multiple: true, required: false
             input "dimmers", "capability.switchLevel", title: "Which Dimmers?", multiple: true, required: false
@@ -263,7 +278,7 @@ def initialize() {
 
 def getURL(e) {
 	def url = "https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/ui?access_token=${state.accessToken}"
-    log.debug "app url: $url"
+    log.debug "${title ?: location.name} ActiON Dashboard URL: $url"
 }
 
 def index() {
