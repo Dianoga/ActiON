@@ -304,9 +304,11 @@ def data() {
 }
 
 def roundNumber(num, unit) {
-	if (num == null || num == "") return "n/a"
-	if (!"$num".isNumber()) return num
-	else {
+	if (num == null || num == "") {
+    	return "n/a"
+    } else if (!"$num".isNumber()) {
+    	return num
+    } else {
     	try {
             return Math.round("$num".toDouble()) + (unit ?: "")
         } catch (e) {
