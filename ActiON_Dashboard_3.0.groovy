@@ -2,7 +2,7 @@
  *  ActiON Dashboard 3.0
  *
  *  ActiON Dashboard is a web application to contol and view status of your devices. 
- *  It is optimized for mobile devices as well as large screens.
+ *  The dashboard is optimized for mobile devices as well as large screens.
  *  Once the dashboard url is generated, it could be used in any modern browser.
  *  There is no need to install SmartThings Mobile application on the device that will run the dashboard.
  *
@@ -40,7 +40,7 @@ preferences {
         section("About") {
             paragraph "ActiON Dashboard is a web application dashboard for your devices. \n" +
             "There is no need to install SmartThings Mobile application on devices that will run ActiON Dashboard. \n" +
-            "Tap SmartApp icon to print the ActiON Dashboard URL to the logs."
+            "Tap SmartApp icon to print the ActiON Dashboard URL to the logs or SMS number specified in app preferences."
             paragraph "Version 3.0. \n" + 
             "http://github.com/625alex/ActiON \n\n" +
             "Donations accepted via PayPal at alex.smart.things@gmail.com. \n" +
@@ -67,12 +67,22 @@ preferences {
     page(name: "selectPreferences", title: "Preferences", install: true, unintall: true) {
         section("Dashboard Preferences...") {
             input "theme", title: "Theme", "enum", multiple: false, required: true, defaultValue: "Color", options: ["Color", "Black and White", "Grey"]
-            input "viewOnly", title: "View Only", "enum", multiple: false, required: true, defaultValue: "No", options: ["Yes", "No"]
+            input "viewOnly", title: "View Only", "bool", required: true, defaultValue: false
             input "title", "text", title:"Dashboard Name", required: false
         }
         
         section("Automatically refresh dashboard...") {
         	input "interval", "decimal", title: "Interval (in minutes)", required: true, defaultValue:2
+        }
+        
+        section("Reset AOuth Access Token...") {
+        	paragraph "Activating this option will invalidate access token. The new ActiON Dashboard URL will be printed to the logs. Access token will keep resetting until this option is turned off."
+        	input "resetOauth", "bool", title: "Reset AOuth Access Token?", defaultValue: false
+        }
+        
+        section("Send text message to...") {
+        	paragraph "Optionally, send text message containing the ActiON Dashboard URL to phone number. The URL will be sent in two parts because it's too long."
+            input "phone", "phone", title: "Which phone?", required: false
         }
     }
     
@@ -88,13 +98,13 @@ def selectPhrases() {
     return dynamicPage(name: "selectPhrases", title: "Other Tiles", install: false, uninstall: true, nextPage: "selectPreferences") {
         if (phrases) {
             section("Hello, Home!") {
-                input "showHelloHome", title: "Show Hello, Home! Phrases", "enum", multiple: false, required: true, defaultValue: "Yes", options: ["Yes", "No"]
+                input "showHelloHome", title: "Show Hello, Home! Phrases", "bool", required: true, defaultValue: true
                 input "phrases", "enum", title: "Which phrases?", multiple: true, options: phrases, required: false
             }
         }
         
         section("Show...") {
-        	input "showMode", title: "Show Mode", "enum", multiple: false, required: true, defaultValue: "Yes", options: ["Yes", "No"]
+        	input "showMode", title: "Show Mode", "bool", required: true, defaultValue: true
             input "showClock", title: "Show Clock", "enum", multiple: false, required: true, defaultValue: "Digital", options: ["Digital", "Analog", "None"]
         }
         
@@ -134,7 +144,7 @@ mappings {
 }
 
 def command() {
-	if (isViewOnly()) {
+	if (viewOnly) {
 		return false;
 	}
 	
@@ -250,11 +260,6 @@ def waitForUpdate(type, device, endState, attribute) {
     return false
 }
 
-
-def isViewOnly() {
-	return viewOnly == "Yes"
-}
-
 def installed() {
 	log.debug "Installed with settings: ${settings}"
 
@@ -269,16 +274,36 @@ def updated() {
 }
 
 def initialize() {
-	if (!state.accessToken) {
-    	createAccessToken()
-    }
-    subscribe(app, getURL)
+	subscribe(app, getURL)
+    scheduledWeatherRefresh()
     getURL(null)
 }
 
 def getURL(e) {
-	def url = "https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/ui?access_token=${state.accessToken}"
-    log.debug "${title ?: location.name} ActiON Dashboard URL: $url"
+    if (resetOauth) {
+    	log.debug "Reseting Access Token"
+    	state.accessToken = null
+    }
+    
+	if (!state.accessToken) {
+    	createAccessToken()
+        log.debug "Creating new Access Token: $state.accessToken"
+    }
+	
+	def url1 = "https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/ui"
+    def url2 = "?access_token=${state.accessToken}"
+    log.debug "${title ?: location.name} ActiON Dashboard URL: $url1$url2"
+    if (phone) {
+        sendSmsMessage(phone, url1)
+        sendSmsMessage(phone, url2)
+    }
+}
+
+
+def scheduledWeatherRefresh() {
+    runIn(3600, scheduledWeatherRefresh, [overwrite: false])
+	weather.refresh()
+    state.lastWeatherRefresh = getTS()
 }
 
 def index() {
@@ -299,16 +324,14 @@ def data() {
         presence: presence?.collect{[type: "presence", id: it.id, name: it.displayName, status: it.currentValue('presence')]}?.sort{it.name},
         motion: motion?.collect{[type: "motion", id: it.id, name: it.displayName, status: it.currentValue('motion')]}?.sort{it.name},
         temperature: temperature?.collect{[type: "temperature", id: it.id, name: it.displayName, status: roundNumber(it.currentValue('temperature'), "°")]}?.sort{it.name},
-        humidity: humidity?.collect{[type: "humidity", id: it.id, name: it.displayName, status: roundNumber(it.currentValue('humidity'), "%")]}?.sort{it.name}
+        humidity: humidity?.collect{[type: "humidity", id: it.id, name: it.displayName, status: roundNumber(it.currentValue('humidity'), "%")]}?.sort{it.name},
     ]
 }
 
 def roundNumber(num, unit) {
-	if (num == null || num == "") {
-    	return "n/a"
-    } else if (!"$num".isNumber()) {
-    	return num
-    } else {
+	if (num == null || num == "") return "n/a"
+	if (!"$num".isNumber()) return num
+	else {
     	try {
             return Math.round("$num".toDouble()) + (unit ?: "")
         } catch (e) {
@@ -347,13 +370,13 @@ def script() {
         });
         
     	\$(".lock, .switch").click(function() {
-			${isViewOnly() ? "return false;" : ""}
+			${viewOnly ? "return false;" : ""}
             animateToggle(\$(this));
             sendCommand(\$(this).attr("deviceType"), \$(this).attr("deviceId"), "toggle");
 		});
         
         \$(".momentary").click(function() {
-			${isViewOnly() ? "return false;" : ""}
+			${viewOnly ? "return false;" : ""}
             animateClick(\$(this));
             sendCommand(\$(this).attr("deviceType"), \$(this).attr("deviceId"), "toggle");
 		});
@@ -529,7 +552,7 @@ def style() {
 }
 
 .lock, .switch, .dimmer, .momentary {
-	cursor: ${isViewOnly() ? "default" : "pointer"};
+	cursor: ${viewOnly ? "default" : "pointer"};
 }
 
 .st-title {
@@ -1068,7 +1091,7 @@ def renderRefresh() {
 }
 
 def renderMode() {
-	if (showMode != "Yes") return ""
+	if (!showMode) return ""
     
     def mode = location.mode.toString()
     
@@ -1108,7 +1131,7 @@ def renderMode() {
 }
 
 def renderHelloHome() {
-	if (!phrases || showHelloHome != "Yes") return ""
+	if (!phrases || !showHelloHome) return ""
     
     def phraseList = ""
     phrases?.each{phraseList = phraseList + """<li data-icon="false"><a href="#" class="st-hello-home-button">$it</a></li>"""}
@@ -1176,12 +1199,12 @@ def renderDimmer(device) {
         <div class="st-icon">
         	<i class="fa ${device.status == "on" ? "fa-toggle-on" : "fa-toggle-off"}"></i>
         </div>
-        <div class="full-width-slider" style="${isViewOnly() ? "display:none" : ""}">
+        <div class="full-width-slider" style="${viewOnly ? "display:none" : ""}">
             <label for="dimmer_$device.id" class="ui-hidden-accessible">Level:</label>
             <input name="dimmer_$device.id" id="dimmer_$device.id" min="0" max="100" value="${device.status == "on" ? device.level : 0}" type="range" 
             deviceLevel="$device.level"
             data-show-value="false" data-mini="true" data-popup-enabled="true" 
-            data-disabled="${isViewOnly()}"
+            data-disabled="$viewOnly"
             data-highlight="true" step="5" deviceId="$device.id">
 		</div>
         <i class="spin fa fa-refresh fa-spin"></i>
