@@ -1,5 +1,5 @@
 /**
- *  ActiON Dashboard 3.0
+ *  ActiON Dashboard 3.0.1
  *
  *  ActiON Dashboard is a web application to contol and view status of your devices. 
  *  The dashboard is optimized for mobile devices as well as large screens.
@@ -41,7 +41,7 @@ preferences {
             paragraph "ActiON Dashboard is a web application dashboard for your devices. \n" +
             "There is no need to install SmartThings Mobile application on devices that will run ActiON Dashboard. \n" +
             "Tap SmartApp icon to print the ActiON Dashboard URL to the logs or SMS number specified in app preferences."
-            paragraph "Version 3.0. \n" + 
+            paragraph "Version 3.0.1 \n" + 
             "http://github.com/625alex/ActiON \n\n" +
             "Donations accepted via PayPal at alex.smart.things@gmail.com. \n" +
             "Copyright © 2014 Alex Malikov"
@@ -347,6 +347,8 @@ def html() {
 def head() {
 	"""
     <meta name="viewport" content="width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <title>${title ?: location.name} Dashboard</title>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
