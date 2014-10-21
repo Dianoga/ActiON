@@ -66,6 +66,7 @@ preferences {
     
     page(name: "selectPreferences", title: "Preferences", install: true, unintall: true) {
         section("Dashboard Preferences...") {
+        	label title: "Title", required: false
             input "theme", title: "Theme", "enum", multiple: false, required: true, defaultValue: "Color", options: ["Color", "Black and White", "Grey"]
             input "viewOnly", title: "View Only", "bool", required: true, defaultValue: false
         }
@@ -82,10 +83,6 @@ preferences {
         section("Send text message to...") {
         	paragraph "Optionally, send text message containing the ActiON Dashboard URL to phone number. The URL will be sent in two parts because it's too long."
             input "phone", "phone", title: "Which phone?", required: false
-        }
-        
-        section ("") {
-            label title: "Dashboard Name", required: false
         }
     }
     
