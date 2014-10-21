@@ -1,12 +1,12 @@
 /**
- *  ActiON Dashboard 3.0.1
+ *  ActiON Dashboard 3.0.2
  *
  *  ActiON Dashboard is a web application to contol and view status of your devices. 
  *  The dashboard is optimized for mobile devices as well as large screens.
  *  Once the dashboard url is generated, it could be used in any modern browser.
  *  There is no need to install SmartThings Mobile application on the device that will run the dashboard.
  *
- *  http://github.com/625alex/ActiON
+ *  http://github.com/625alex/ActiON-Dashboard
  *
  *  Donations accepted via PayPal at alex.smart.things@gmail.com
  *
@@ -41,8 +41,8 @@ preferences {
             paragraph "ActiON Dashboard is a web application dashboard for your devices. \n" +
             "There is no need to install SmartThings Mobile application on devices that will run ActiON Dashboard. \n" +
             "Tap SmartApp icon to print the ActiON Dashboard URL to the logs or SMS number specified in app preferences."
-            paragraph "Version 3.0.1 \n" + 
-            "http://github.com/625alex/ActiON \n\n" +
+            paragraph "Version 3.0.2\n\n" +
+            "http://github.com/625alex/ActiON-Dashboard\n\n" +
             "Donations accepted via PayPal at alex.smart.things@gmail.com. \n" +
             "Copyright © 2014 Alex Malikov"
         }
@@ -68,7 +68,6 @@ preferences {
         section("Dashboard Preferences...") {
             input "theme", title: "Theme", "enum", multiple: false, required: true, defaultValue: "Color", options: ["Color", "Black and White", "Grey"]
             input "viewOnly", title: "View Only", "bool", required: true, defaultValue: false
-            input "title", "text", title:"Dashboard Name", required: false
         }
         
         section("Automatically refresh dashboard...") {
@@ -83,6 +82,10 @@ preferences {
         section("Send text message to...") {
         	paragraph "Optionally, send text message containing the ActiON Dashboard URL to phone number. The URL will be sent in two parts because it's too long."
             input "phone", "phone", title: "Which phone?", required: false
+        }
+        
+        section ("") {
+            label title: "Dashboard Name", required: false
         }
     }
     
@@ -302,7 +305,7 @@ def getURL(e) {
 
 def scheduledWeatherRefresh() {
     runIn(3600, scheduledWeatherRefresh, [overwrite: false])
-    weather?.refresh()
+	weather?.refresh()
     state.lastWeatherRefresh = getTS()
 }
 
@@ -349,7 +352,7 @@ def head() {
     <meta name="viewport" content="width=device-width" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <title>${title ?: location.name} Dashboard</title>
+    <title>${app.label ?: location.name}</title>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/weather-icons/1.2/css/weather-icons.min.css" />
