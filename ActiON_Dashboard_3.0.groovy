@@ -302,7 +302,7 @@ def getURL(e) {
 
 def scheduledWeatherRefresh() {
     runIn(3600, scheduledWeatherRefresh, [overwrite: false])
-	weather.refresh()
+    weather?.refresh()
     state.lastWeatherRefresh = getTS()
 }
 
