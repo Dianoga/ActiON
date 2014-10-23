@@ -3,11 +3,55 @@ body {
 
 #container {
 	background: #1d1d1d;
+	padding: 10px;
 }
 
 .st-tile {
 	float: left;
 	position: relative;
-	width: 10%;
-	padding-bottom: 10%;
+	width: 150px;
+	height: 150px;
+
+	&.s1x2 {
+		width: 300px;
+	}
+
+	.st-tile-content {
+		position: absolute;
+		left: 5px;
+		right: 5px;
+		top: 5px;
+		bottom: 5px;
+		overflow: hidden;
+		padding: 5px;
+	}
+
+	.st-title {
+		color: white;
+		font-size: 14px;
+		line-height: 16px;
+		font-weight:400;
+		font-style: normal;
+		text-shadow: none;
+	}
+
+	.st-icon {
+		color: white;
+		height: 3em;
+		width: 3em;
+		left: 50%;
+		top: 50%;
+		margin-left: -1.5em;
+		margin-top: -1.5em;
+		position: absolute;
+		text-align: center;
+
+		.fa, .wi {
+			font-size:3em;
+		}
+	}
+
+	&.contact {
+		background-color: #1abc9c;
+	}
 }

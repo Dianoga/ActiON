@@ -76,18 +76,40 @@ Action.DeviceView = Marionette.ItemView.extend({
 		}
 
 		return template;
+	},
+	bindings: {
+		'.st-title': 'name',
+	},
+
+	onRender: function() {
+		this.stickit();
+	},
+});
+
+Action.ContactView = Action.DeviceView.extend({
+	initialize: function() {
+		_.extend(this.bindings, {
+			'.fa': {
+				observe: 'status',
+				update: function($el, val, model) {
+					val == 'closed' ? $el.addClass('fa-compress') : $el.addClass('fa-expand');
+				}
+			}
+		});
 	}
 });
 
 Action.DevicesView = Marionette.CollectionView.extend({
 	getChildView: function(item) {
+		if (item instanceof Action.Contact) {
+			return Action.ContactView;
+		}
+
 		return Action.DeviceView;
 	},
 
 	initialize: function() {
-		this.listenTo(this, 'all', function() {
-			console.log(arguments);
-		});
+
 	},
 
 	onRender: function() {
