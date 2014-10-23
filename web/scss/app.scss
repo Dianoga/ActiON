@@ -61,6 +61,10 @@ body {
 
 	&.contact {
 		background-color: #16a085;
+
+		.fa {
+			@extend .r45;
+		}
 	}
 
 	&.switch {

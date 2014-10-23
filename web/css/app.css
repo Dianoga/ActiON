@@ -3,7 +3,7 @@
   padding: 10px;
 }
 
-.r45 {
+.r45, .st-tile.contact .fa {
   -moz-transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   -o-transform: rotate(45deg);

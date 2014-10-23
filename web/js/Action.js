@@ -83,64 +83,45 @@ Action.DeviceView = Marionette.ItemView.extend({
 	},
 	bindings: {
 		'.st-title': 'name',
+		'.fa': {
+			observe: 'status',
+			update: 'getIcon',
+		},
 	},
+	icons: {},
 
 	onRender: function() {
 		this.stickit();
 		this.$el.enhanceWithin();
 	},
-});
 
-Action.ContactView = Action.DeviceView.extend({
-	initialize: function() {
-		this.bindings = _.extend({}, this.bindings, {
-			'.fa': {
-				observe: 'status',
-				update: function($el, val, model) {
-					val == 'closed' ? $el.addClass('fa-compress') : $el.addClass('fa-expand');
-					$el.addClass('r45');
-				}
-			}
-		});
-	}
-});
-
-Action.SwitchView = Action.DeviceView.extend({
-	initialize: function() {
-		this.bindings = _.extend({}, this.bindings, {
-			'.fa': {
-				observe: 'status',
-				update: function($el, val, model) {
-					val == 'off' ? $el.addClass('fa-toggle-off') : $el.addClass('fa-toggle-on');
-				}
-			}
-		});
-	}
-});
-
-Action.DimmerView = Action.DeviceView.extend({
-	initialize: function() {
-		this.bindings = _.extend({}, this.bindings, {
-			'.fa': {
-				observe: 'status',
-				update: function($el, val, model) {
-					val == 'off' ? $el.addClass('fa-toggle-off') : $el.addClass('fa-toggle-on');
-				}
-			}
+	getIcon: function($el, val, model) {
+		_.each(this.icons, function(icon, key) {
+			$el.toggleClass(icon, key == val);
 		});
 	},
 });
 
+Action.ContactView = Action.DeviceView.extend({
+	icons: {
+		'closed': 'fa-compress',
+		'open': 'fa-expand',
+	},
+});
+
+Action.SwitchView = Action.DeviceView.extend({
+	icons: {
+		'off': 'fa-toggle-off',
+		'on': 'fa-toggle-on',
+	},
+});
+
+Action.DimmerView = Action.SwitchView.extend({});
+
 Action.MotionView = Action.DeviceView.extend({
-	initialize: function() {
-		this.bindings = _.extend({}, this.bindings, {
-			'.fa': {
-				observe: 'status',
-				update: function($el, val, model) {
-					val == 'inactive' ? $el.addClass('fa-square-o') : $el.addClass('fa-square');
-				}
-			}
-		});
+	icons: {
+		'inactive': 'fa-square-o',
+		'active': 'fa-square',
 	},
 });
 
