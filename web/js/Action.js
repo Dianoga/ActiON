@@ -3,7 +3,11 @@ var Action = new Backbone.Marionette.Application();
 Action.uri = 'https://graph.api.smartthings.com/api/smartapps/installations/825c747f-6845-4d4d-a4db-e618856b01d2/';
 Action.access_token = 'd575b326-f7d7-4ee8-87af-1e83d7ad830a';
 
-Action.Device = Backbone.Model.extend();
+Action.Device = Backbone.Model.extend({
+	initialize: function() {
+		this.set('id', this.get('type') + '_' + this.get('id'));
+	}
+});
 Action.Devices = Backbone.Collection.extend({
 	model: Action.Device,
 });
@@ -72,7 +76,7 @@ Action.DeviceView = Marionette.ItemView.extend({
 	getTemplate: function() {
 		var template = '#_st-' + this.model.get('type');
 		if ($(template).length === 0) {
-			template = '#_st-placeholder';
+			template = '#_st-device';
 		}
 
 		return template;
@@ -89,7 +93,7 @@ Action.DeviceView = Marionette.ItemView.extend({
 
 Action.ContactView = Action.DeviceView.extend({
 	initialize: function() {
-		_.extend(this.bindings, {
+		this.bindings = _.extend({}, this.bindings, {
 			'.fa': {
 				observe: 'status',
 				update: function($el, val, model) {
@@ -102,7 +106,7 @@ Action.ContactView = Action.DeviceView.extend({
 
 Action.SwitchView = Action.DeviceView.extend({
 	initialize: function() {
-		_.extend(this.bindings, {
+		this.bindings = _.extend({}, this.bindings, {
 			'.fa': {
 				observe: 'status',
 				update: function($el, val, model) {
@@ -115,11 +119,24 @@ Action.SwitchView = Action.DeviceView.extend({
 
 Action.DimmerView = Action.DeviceView.extend({
 	initialize: function() {
-		_.extend(this.bindings, {
+		this.bindings = _.extend({}, this.bindings, {
 			'.fa': {
 				observe: 'status',
 				update: function($el, val, model) {
 					val == 'off' ? $el.addClass('fa-toggle-off') : $el.addClass('fa-toggle-on');
+				}
+			}
+		});
+	},
+});
+
+Action.MotionView = Action.DeviceView.extend({
+	initialize: function() {
+		this.bindings = _.extend({}, this.bindings, {
+			'.fa': {
+				observe: 'status',
+				update: function($el, val, model) {
+					val == 'inactive' ? $el.addClass('fa-square-o') : $el.addClass('fa-square');
 				}
 			}
 		});
@@ -134,6 +151,8 @@ Action.DevicesView = Marionette.CollectionView.extend({
 			return Action.DimmerView;
 		} else if (item instanceof Action.Switch) {
 			return Action.SwitchView;
+		} else if (item instanceof Action.Motion) {
+			return Action.MotionView;
 		}
 
 		return Action.DeviceView;
