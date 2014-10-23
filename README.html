@@ -1,0 +1,57 @@
+<h1 id="action-dashboard">ActiON Dashboard</h1>
+<p>ActiON Dashboard is a web application to contol and view status of your devices. </p>
+<p>It is optimized for mobile devices as well as large screens.</p>
+<p>Once the dashboard url is generated, it could be used in any modern browser.</p>
+<p>There is no need to install SmartThings Mobile application on the device that will run the dashboard.</p>
+<h1 id="create-smartapp">Create SmartApp</h1>
+<ul>
+<li>Login to <a href="https://graph.api.smartthings.com/">https://graph.api.smartthings.com/</a></li>
+<li>Click on My SmartApps <a href="https://graph.api.smartthings.com/ide/apps">https://graph.api.smartthings.com/ide/apps</a></li>
+<li>Click on &quot;+ New SmartApp&quot; on the right side</li>
+<li>Click on &quot;From Code&quot; tab</li>
+<li>Paste the Groovy code for the SmartApp</li>
+<li>Click &quot;Create&quot; button on the bottom of the page</li>
+<li>Click &quot;App Settings&quot; button on top right of the page</li>
+<li>Click on &quot;OAuth&quot; link toward the bottom of the page</li>
+<li>Click on &quot;Enable OAuth in Smart App&quot;</li>
+<li>Click &quot;Update&quot; button</li>
+<li>Click on &quot;Code&quot; button on top right of the page</li>
+<li>Click &quot;Publish&quot; button then &quot;For Me&quot; option</li>
+</ul>
+<h1 id="install-app-via-smartthings-mobile-app">Install app via SmartThings Mobile app</h1>
+<ul>
+<li>Go to Dashboard of SmartThings Mobile app</li>
+<li>Tap (+) on the bottom of the app</li>
+<li>Swipe all the way to the right to My Apps</li>
+<li>Pick the app that you created</li>
+<li>Follow through configuration of the SmartApp</li>
+<li>Don&#39;t forget to click &quot;Done&quot;</li>
+</ul>
+<p>To obtain the URL of your ActiON Dashboard</p>
+<ul>
+<li>Open logs at <a href="https://graph.api.smartthings.com/ide/logs">https://graph.api.smartthings.com/ide/logs</a> </li>
+<li>Go to My Apps section in SmartThings Mobile app</li>
+<li>Tap the icon of ActiON SmartApp</li>
+<li>The ActiON Dashboard URL will be printed in the logs</li>
+</ul>
+<h1 id="install-app-via-smartthings-ide">Install app via SmartThings IDE</h1>
+<ul>
+<li>Login to <a href="https://graph.api.smartthings.com/">https://graph.api.smartthings.com/</a></li>
+<li>Click on My SmartApps <a href="https://graph.api.smartthings.com/ide/apps">https://graph.api.smartthings.com/ide/apps</a></li>
+<li>Click on the name of the app you want to install</li>
+<li>Pick location in the drop-down on top right</li>
+<li>Click &quot;Set Location&quot; button</li>
+<li>Follow through configuration of the SmartApp, don&#39;t forget to get through all pages if there are more than one.</li>
+<li>Don&#39;t forget to click &quot;Done&quot;</li>
+</ul>
+<p>To obtain the URL of your ActiON Dashboard</p>
+<ul>
+<li>Open logs in another tab at <a href="https://graph.api.smartthings.com/ide/logs">https://graph.api.smartthings.com/ide/logs</a></li>
+<li>Back in the tab that had the SmartApp details, click &quot;Trigger Now&quot; button on right side under Preferences</li>
+<li>The ActiON Dashboard URL will be printed in the logs</li>
+</ul>
+<h1 id="oauth">OAuth</h1>
+<ul>
+<li>If you omit the access_token from the URL, you will be prompted to login. This will authenticate the session. I do not know how long the session stays valid.</li>
+<li>If you need to invalidate the access_token, you can uninstall the app or change OAuth details in the App Settings.</li>
+</ul>
