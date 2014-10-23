@@ -8,67 +8,67 @@ Action.Devices = Backbone.Collection.extend({
 	model: Action.Device,
 });
 
+Action.DeviceTypes = Backbone.Collection.extend({
+	initialize: function() {
+		this.listenTo(this, 'add', function(model) {
+			Action.devices.add(model);
+		});
+
+		this.listenTo(this, 'remove', function(model) {
+			Action.devices.remove(model);
+		});
+	}
+});
+
 Action.Contact = Action.Device.extend();
-Action.Contacts = Action.Devices.extend({
+Action.Contacts = Action.DeviceTypes.extend({
 	model: Action.Contact,
 });
 
 Action.Dimmer = Action.Device.extend();
-Action.Dimmers = Action.Devices.extend({
+Action.Dimmers = Action.DeviceTypes.extend({
 	model: Action.Dimmer,
 });
 
 Action.Humidity = Action.Device.extend();
-Action.Humidities = Action.Devices.extend({
+Action.Humidities = Action.DeviceTypes.extend({
 	model: Action.Humidity,
 });
 
 Action.Lock = Action.Device.extend();
-Action.Locks = Action.Devices.extend({
+Action.Locks = Action.DeviceTypes.extend({
 	model: Action.Lock,
 });
 
 Action.Momentary = Action.Device.extend();
-Action.Momentaries = Action.Devices.extend({
+Action.Momentaries = Action.DeviceTypes.extend({
 	model: Action.Momentary,
 });
 
 Action.Motion = Action.Device.extend();
-Action.Motions = Action.Devices.extend({
+Action.Motions = Action.DeviceTypes.extend({
 	model: Action.Motion,
 });
 
 Action.Presence = Action.Device.extend();
-Action.Presences = Action.Devices.extend({
+Action.Presences = Action.DeviceTypes.extend({
 	model: Action.Presence,
 });
 
 Action.Switch = Action.Device.extend();
-Action.Switches = Action.Devices.extend({
+Action.Switches = Action.DeviceTypes.extend({
 	model: Action.Switch,
 });
 
 Action.Temperature = Action.Device.extend();
-Action.Temperatures = Action.Devices.extend({
+Action.Temperatures = Action.DeviceTypes.extend({
 	model: Action.Temperature,
 });
 
 
-Action.addInitializer(function() {
-	Action.contacts = new Action.Contacts();
-	Action.dimmers = new Action.Dimmers();
-	Action.humidities = new Action.Humidities();
-	Action.locks = new Action.Locks();
-	Action.momentaries = new Action.Momentaries();
-	Action.motions = new Action.Motions();
-	Action.presences = new Action.Presences();
-	Action.switches = new Action.Switches();
-	Action.temperatures = new Action.Temperatures();
-
-	var dataUri = Action.uri + 'data';
-	var data = {};
+Action.updateData = function() {
 	$.ajax({
-		url: dataUri,
+		url: Action.dataUri,
 		dataType: 'jsonp',
 		data: {
 			access_token: Action.access_token,
@@ -86,6 +86,23 @@ Action.addInitializer(function() {
 			Action.temperatures.set(data.temperature);
 		},
 	});
+};
+
+Action.addInitializer(function() {
+	Action.devices = new Action.Devices();
+
+	Action.contacts = new Action.Contacts();
+	Action.dimmers = new Action.Dimmers();
+	Action.humidities = new Action.Humidities();
+	Action.locks = new Action.Locks();
+	Action.momentaries = new Action.Momentaries();
+	Action.motions = new Action.Motions();
+	Action.presences = new Action.Presences();
+	Action.switches = new Action.Switches();
+	Action.temperatures = new Action.Temperatures();
+
+	Action.dataUri = Action.uri + 'data';
+	Action.updateData();
 });
 
 Action.start();
