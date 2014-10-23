@@ -66,19 +66,39 @@ Action.Temperatures = Action.DeviceTypes.extend({
 });
 
 Action.DeviceView = Marionette.ItemView.extend({
-	template: function(item) {
-		var template = '#_st-' + item.type;
+	className: function() {
+		return 'st-tile ' + this.model.get('type');
+	},
+	getTemplate: function() {
+		var template = '#_st-' + this.model.get('type');
 		if ($(template).length === 0) {
 			template = '#_st-placeholder';
 		}
 
-		return Marionette.TemplateCache.get(template);
+		return template;
 	}
 });
 
 Action.DevicesView = Marionette.CollectionView.extend({
 	getChildView: function(item) {
 		return Action.DeviceView;
+	},
+
+	initialize: function() {
+		this.listenTo(this, 'all', function() {
+			console.log(arguments);
+		});
+	},
+
+	onRender: function() {
+		this.$el.packery({
+			itemSelector: '.st-tile',
+			gutter: 10,
+		});
+
+		this.listenTo(this, 'childview:show', function(view) {
+			this.$el.packery('reloadItems').packery();
+		});
 	}
 });
 
@@ -124,14 +144,12 @@ Action.addInitializer(function() {
 	Action.addRegions({
 		container: '#container',
 	});
-});
 
-Action.on('start', function() {
 	Action.container.show(new Action.DevicesView({
 		collection: Action.devices
 	}));
 });
 
 $().ready(function() {
-	Action.start()
+	Action.start();
 });
