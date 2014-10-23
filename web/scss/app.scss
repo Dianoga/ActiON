@@ -73,10 +73,20 @@ body {
 
 	&.temperature {
 		background-color: #2980b9;
+
+		.st-icon {
+			font-size: 3em;
+			top: 120px;
+		}
 	}
 
 	&.humidity {
 		background-color: #8e44ad;
+
+		.st-icon {
+			font-size: 3em;
+			top: 120px;
+		}
 	}
 
 	&.momentary {
@@ -133,4 +143,10 @@ body {
     .ui-slider-popup {
     	left: 25% !important;
     }
+}
+
+// A pseudo icon to simplify things
+.fa-map-marker-away:before {
+	content: "\f041";
+	opacity: 0.4;
 }

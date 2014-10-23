@@ -60,8 +60,16 @@
 .st-tile.temperature {
   background-color: #2980b9;
 }
+.st-tile.temperature .st-icon {
+  font-size: 3em;
+  top: 120px;
+}
 .st-tile.humidity {
   background-color: #8e44ad;
+}
+.st-tile.humidity .st-icon {
+  font-size: 3em;
+  top: 120px;
 }
 .st-tile.momentary {
   background-color: #2c3e50;
@@ -106,4 +114,9 @@
 }
 .full-width-slider .ui-slider-popup {
   left: 25% !important;
+}
+
+.fa-map-marker-away:before {
+  content: "\f041";
+  opacity: 0.4;
 }

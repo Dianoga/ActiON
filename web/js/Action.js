@@ -116,7 +116,14 @@ Action.SwitchView = Action.DeviceView.extend({
 	},
 });
 
-Action.DimmerView = Action.SwitchView.extend({});
+Action.PresenceView = Action.DeviceView.extend({
+	icons: {
+		'not present': 'fa-map-marker-away',
+		'present': 'fa-map-marker',
+	},
+});
+
+Action.DimmerView = Action.SwitchView.extend();
 
 Action.MotionView = Action.DeviceView.extend({
 	icons: {
@@ -124,6 +131,21 @@ Action.MotionView = Action.DeviceView.extend({
 		'active': 'fa-square',
 	},
 });
+
+Action.TemperatureView = Action.DeviceView.extend({
+	initialize: function() {
+		this.bindings = _.extend({}, this.bindings, {
+			'.st-icon': {
+				observe: 'status',
+				onGet: function(val) {
+					return val;
+				}
+			}
+		});
+	}
+});
+
+Action.HumidityView = Action.TemperatureView.extend();
 
 Action.DevicesView = Marionette.CollectionView.extend({
 	getChildView: function(item) {
@@ -135,6 +157,12 @@ Action.DevicesView = Marionette.CollectionView.extend({
 			return Action.SwitchView;
 		} else if (item instanceof Action.Motion) {
 			return Action.MotionView;
+		} else if (item instanceof Action.Temperature) {
+			return Action.TemperatureView;
+		} else if (item instanceof Action.Humidity) {
+			return Action.HumidityView;
+		} else if (item instanceof Action.Presence) {
+			return Action.PresenceView;
 		}
 
 		return Action.DeviceView;
