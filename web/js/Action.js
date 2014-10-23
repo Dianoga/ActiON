@@ -65,6 +65,23 @@ Action.Temperatures = Action.DeviceTypes.extend({
 	model: Action.Temperature,
 });
 
+Action.DeviceView = Marionette.ItemView.extend({
+	template: function(item) {
+		var template = '#_st-' + item.type;
+		if ($(template).length === 0) {
+			template = '#_st-placeholder';
+		}
+
+		return Marionette.TemplateCache.get(template);
+	}
+});
+
+Action.DevicesView = Marionette.CollectionView.extend({
+	getChildView: function(item) {
+		return Action.DeviceView;
+	}
+});
+
 
 Action.updateData = function() {
 	$.ajax({
@@ -103,6 +120,18 @@ Action.addInitializer(function() {
 
 	Action.dataUri = Action.uri + 'data';
 	Action.updateData();
+
+	Action.addRegions({
+		container: '#container',
+	});
 });
 
-Action.start();
+Action.on('start', function() {
+	Action.container.show(new Action.DevicesView({
+		collection: Action.devices
+	}));
+});
+
+$().ready(function() {
+	Action.start()
+});

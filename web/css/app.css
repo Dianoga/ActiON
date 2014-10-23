@@ -1,0 +1,10 @@
+#container {
+  background: #1d1d1d;
+}
+
+.st-tile {
+  float: left;
+  position: relative;
+  width: 10%;
+  padding-bottom: 10%;
+}
