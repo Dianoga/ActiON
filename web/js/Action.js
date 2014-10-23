@@ -98,6 +98,7 @@ Action.ContactView = Action.DeviceView.extend({
 				observe: 'status',
 				update: function($el, val, model) {
 					val == 'closed' ? $el.addClass('fa-compress') : $el.addClass('fa-expand');
+					$el.addClass('r45');
 				}
 			}
 		});
