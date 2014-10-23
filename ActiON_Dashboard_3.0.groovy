@@ -1,7 +1,7 @@
 /**
  *  ActiON Dashboard 3.0.2
  *
- *  ActiON Dashboard is a web application to contol and view status of your devices. 
+ *  ActiON Dashboard is a web application to contol and view status of your devices.
  *  The dashboard is optimized for mobile devices as well as large screens.
  *  Once the dashboard url is generated, it could be used in any modern browser.
  *  There is no need to install SmartThings Mobile application on the device that will run the dashboard.
@@ -36,7 +36,7 @@ definition(
 
 preferences {
 	page(name: "selectDevices", title: "Devices", install: false, unintall: true, nextPage: "selectPhrases") {
-    
+
         section("About") {
             paragraph "ActiON Dashboard is a web application dashboard for your devices. \n" +
             "There is no need to install SmartThings Mobile application on devices that will run ActiON Dashboard. \n" +
@@ -46,7 +46,7 @@ preferences {
             "Donations accepted via PayPal at alex.smart.things@gmail.com. \n" +
             "Copyright © 2014 Alex Malikov"
         }
-        
+
     	section("Allow control of these things...") {
             input "switches", "capability.switch", title: "Which Switches?", multiple: true, required: false
             input "dimmers", "capability.switchLevel", title: "Which Dimmers?", multiple: true, required: false
@@ -63,29 +63,29 @@ preferences {
             input "weather", "device.smartweatherStationTile", title: "Which Weather?", multiple: true, required: false
         }
     }
-    
+
     page(name: "selectPreferences", title: "Preferences", install: true, unintall: true) {
         section("Dashboard Preferences...") {
         	label title: "Title", required: false
             input "theme", title: "Theme", "enum", multiple: false, required: true, defaultValue: "Color", options: ["Color", "Black and White", "Grey"]
             input "viewOnly", title: "View Only", "bool", required: true, defaultValue: false
         }
-        
+
         section("Automatically refresh dashboard...") {
         	input "interval", "decimal", title: "Interval (in minutes)", required: true, defaultValue:2
         }
-        
+
         section("Reset AOuth Access Token...") {
         	paragraph "Activating this option will invalidate access token. The new ActiON Dashboard URL will be printed to the logs. Access token will keep resetting until this option is turned off."
         	input "resetOauth", "bool", title: "Reset AOuth Access Token?", defaultValue: false
         }
-        
+
         section("Send text message to...") {
         	paragraph "Optionally, send text message containing the ActiON Dashboard URL to phone number. The URL will be sent in two parts because it's too long."
             input "phone", "phone", title: "Which phone?", required: false
         }
     }
-    
+
     page(name: "selectPhrases", title: "Hello Home", content: "selectPhrases")
 }
 
@@ -94,7 +94,7 @@ def selectPhrases() {
 	def phrases = location?.helloHome?.getPhrases()*.label
     phrases?.sort()
     log.debug "phrases: $phrases"
-    
+
     return dynamicPage(name: "selectPhrases", title: "Other Tiles", install: false, uninstall: true, nextPage: "selectPreferences") {
         if (phrases) {
             section("Hello, Home!") {
@@ -102,22 +102,22 @@ def selectPhrases() {
                 input "phrases", "enum", title: "Which phrases?", multiple: true, options: phrases, required: false
             }
         }
-        
+
         section("Show...") {
         	input "showMode", title: "Show Mode", "bool", required: true, defaultValue: true
             input "showClock", title: "Show Clock", "enum", multiple: false, required: true, defaultValue: "Digital", options: ["Digital", "Analog", "None"]
         }
-        
+
         section("Show Link 1...") {
         	input "link1title", "text", title:"Link 1 Title", required: false
             input "link1url", "text", title:"Link 1 URL", required: false
         }
-        
+
         section("Show Link 2...") {
         	input "link2title", "text", title:"Link 2 Title", required: false
             input "link2url", "text", title:"Link 2 URL", required: false
         }
-        
+
         section("Show Link 3...") {
         	input "link3title", "text", title:"Link 3 Title", required: false
             input "link3url", "text", title:"Link 3 URL", required: false
@@ -147,21 +147,21 @@ def command() {
 	if (viewOnly) {
 		return false;
 	}
-	
+
 	log.debug "command received with params $params"
-    
+
     def id = params.id
     def type = params.type
     def value = params.value
-    
+
     def device
     def endState
     def attribute
-    
+
     if (value == "toggle" && (type == "dimmer" || type == "switch")) {
     	device = (type == "dimmer" ? dimmers : switches)?.find{it.id == id}
         attribute = "switch"
-        
+
         log.debug "command toggle for dimmer/switch $device"
         if (device) {
             if(value == "toggle") {
@@ -184,7 +184,7 @@ def command() {
     	device = dimmers?.find{it.id == id}
         attribute = "switch"
         endState = "off"
-        
+
         if (device) {
         	device.setLevel(0)
         	device.off()
@@ -193,14 +193,14 @@ def command() {
     	device = dimmers?.find{it.id == id}
         attribute = "level"
         endState = Math.min(value as Integer, 99) as String
-        
+
         if (device) {
         	device.setLevel(Math.min(value as Integer, 99))
         }
     } else if (type == "lock") {
     	device = locks?.find{it.id == id}
         attribute = "lock"
-        
+
         if (device) {
         	log.debug "current lock status ${device.currentValue('lock')}"
         	if(device.currentValue('lock') == "locked") {
@@ -210,7 +210,7 @@ def command() {
                 device.lock()
                 endState = "locked"
             }
-            
+
         }
     } else if (type == "mode") {
 		setLocationMode(value)
@@ -224,18 +224,18 @@ def command() {
         	device.push()
         }
     }
-    
+
     def isUpdated = waitForUpdate(type, device, endState, attribute)
-    
+
     def response = [:]
-    
+
     if (isUpdated) {
     	response.status = "ok"
     } else {
     	response.status = "refresh"
     }
     log.debug "isUpdated for $device : $isUpdated"
-    
+
     render contentType: "application/javascript", data: "${params.callback}(${response.encodeAsJSON()})"
 }
 
@@ -245,7 +245,7 @@ def command() {
 */
 def waitForUpdate(type, device, endState, attribute) {
 	if (type == "mode" || type == "helloHome" || type == "momentary") return true
-    
+
 	log.debug "about to check $device attribute $attribute for $endState"
 	if (device && endState && attribute) {
     	for (def i = 0; i < 5 ; i++ ) {
@@ -284,12 +284,12 @@ def getURL(e) {
     	log.debug "Reseting Access Token"
     	state.accessToken = null
     }
-    
+
 	if (!state.accessToken) {
     	createAccessToken()
         log.debug "Creating new Access Token: $state.accessToken"
     }
-	
+
 	def url1 = "https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/ui"
     def url2 = "?access_token=${state.accessToken}"
     log.debug "${title ?: location.name} ActiON Dashboard URL: $url1$url2"
@@ -311,7 +311,7 @@ def index() {
 }
 
 def list() {
-	render contentType: "application/javascript", data: "${params.callback}(${data().encodeAsJSON()}})"
+	render contentType: "application/javascript", data: "${params.callback}(${data().encodeAsJSON()})"
 }
 
 def data() {
@@ -356,12 +356,12 @@ def head() {
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="//code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <script src="//cdn.jsdelivr.net/coolclock/2.1.4/coolclock.min.js"></script>
-    
+
     ${style()}
     ${themes()}
     ${media()}
     """
-}                                                              
+}
 
 def script() {
 """
@@ -370,23 +370,23 @@ def script() {
         \$("body").bind("contextmenu",function(){
            return false;
         });
-        
+
     	\$(".lock, .switch").click(function() {
 			${viewOnly ? "return false;" : ""}
             animateToggle(\$(this));
             sendCommand(\$(this).attr("deviceType"), \$(this).attr("deviceId"), "toggle");
 		});
-        
+
         \$(".momentary").click(function() {
 			${viewOnly ? "return false;" : ""}
             animateClick(\$(this));
             sendCommand(\$(this).attr("deviceType"), \$(this).attr("deviceId"), "toggle");
 		});
-        
+
         \$(".link").click(function() {
             animateClick(\$(this));
 		});
-        
+
         \$(".dimmer").on( 'slidestop', function( e ) {
         	//animateSliderToOff(\$(this).closest(".st-tile"));
             var val = \$(this).find("input").val();
@@ -397,7 +397,7 @@ def script() {
             }
             sendCommand("dimmer", \$(this).find("input").attr("deviceId"), \$(this).find("input").val());
         });
-        
+
         \$(".dimmer .st-icon").click(function() {
             animateToggle(\$(this).closest(".st-tile"));
             sendCommand("dimmer", \$(this).closest(".st-tile").attr("deviceId"), "toggle");
@@ -410,23 +410,23 @@ def script() {
             	\$(this).closest(".st-tile").find("input").val(0).slider("refresh");
                 \$(this).closest(".st-tile").attr("deviceStatus", "off");
             }
-            
+
 		});
-        
+
         \$(".refresh, .clock").click(function() {
         	animateClick(\$(this));
             refresh();
 		});
-        
+
         \$("#st-modes li").click(function() {
         	\$("#st-modes").popup("close");
         	animateClick(\$(".mode"));
             var mode = \$(this).text();
 			sendCommand("mode", "mode", mode);
-            
+
             \$("#mode-name").html(mode).hide();
             \$("#mode-icon i").hide();
-            
+
             if (mode == "Home") {
             	\$("#mode-home").show();
             } else if (mode == "Away") {
@@ -438,57 +438,57 @@ def script() {
             }
             return false;
         });
-        
+
         \$("#mode_mode").click(function() {
         	\$("#st-modes").popup("open", {positionTo: \$(this)});
         });
-        
+
         \$("#st-phrases li").on("click", function() {
         	\$("#st-phrases").popup("close");
         	animateClick(\$(".hello-home"));
 			sendCommand("helloHome", "helloHome", \$(this).text());
             return false;
         });
-        
+
         \$("#helloHome_helloHome").click(function() {
         	\$("#st-phrases").popup("open", {positionTo: \$(this)});
         });
-        
+
         animateMotion();
-    
+
 	});
-    
+
     function animateMotion() {
     	\$(".st-animate-motion").animate({opacity: 0.3}, 2000, "swing").animate({opacity: 0.3}, 500).animate({opacity: 1}, 1000, "swing").animate({opacity: 1}, 500, animateMotion);
     }
-    
+
     function animateToggle(element) {
         var oldIcon = element.find(".st-icon i").attr("class");
         var newIcon = toggleIcon(oldIcon);
         spinOn(element).animate({opacity: .5}, 300).find(".st-icon i").removeClass(oldIcon).addClass(newIcon).closest(element).animate({opacity: 1}, 200);
         return element;
     }
-    
+
     function animateDimmer(element, newIcon) {
         var oldIcon = element.find(".st-icon i").attr("class");
         spinOn(element).animate({opacity: .5}, 300).find(".st-icon i").removeClass(oldIcon).addClass(newIcon).closest(element).animate({opacity: 1}, 200);
         return element;
     }
-    
+
     function animateClick(element) {
         spinOn(element).animate({opacity: .5}, 300).animate({opacity: 1}, 200);
     }
-    
+
     function sendCommand(type, id, value) {
     	//alert("&type=" + type + "&id=" + id + "&value=" + value);
-        
+
         var url = window.location.href.slice(window.location.href.indexOf('?') + 1);
         var hashIndex = url.indexOf('#');
         if (hashIndex > 0) {
         	url = url.substring(0, hashIndex);
         }
         var url = "command/?" + url + "&type=" + type + "&id=" + id + "&value=" + value;
-        
+
 		\$.getJSON(url + "&callback=?")
             .done(function( data ) {
             	if (data.status == "ok") {
@@ -505,7 +505,7 @@ def script() {
                 refresh(10);
             });
     }
-    
+
    	function refresh(timeout) {
     	if (!timeout) {
         	setTimeout(function() { doRefresh() }, 100);
@@ -513,22 +513,22 @@ def script() {
         	setTimeout(function() { doRefresh() }, timeout * 1000);
         }
     }
-    
+
     function doRefresh() {
     	\$(".refresh .st-icon").addClass("fa-spin");
         location.reload();
     }
-    
+
     function spinOn(element) {
     	element.closest(".st-tile").find(".spin").animate({opacity: .5}, 500);
         return element;
     }
-    
+
     function spinOff(element) {
     	element.closest(".st-tile").find(".spin").animate({opacity: 0}, 1000);
         return element;
     }
-    
+
     function toggleIcon(icon) {
     	var icons = {
         "fa fa-toggle-off" : "fa fa-toggle-on",
@@ -536,12 +536,12 @@ def script() {
         "fa fa-lock" : "fa fa-unlock-alt",
         "fa fa-unlock-alt" : "fa fa-lock"
         }
-        
+
         return icons[icon];
     }
-    
+
     refresh(60 * $interval)
-    
+
 </script>
 """
 }
@@ -638,7 +638,7 @@ def style() {
 
 .dimmer .st-tile-content {
 	/*background-color: #1e7145;*/
-    
+
     background-color: #3C9840;
 }
 
@@ -774,7 +774,7 @@ div.st-tile-content {
     margin-left:-40%;
     margin-top:10%;
     position: absolute;
-    
+
 }
 .full-width-select {
 	width:100px;
@@ -784,7 +784,7 @@ div.st-tile-content {
     margin-left:-50px;
     margin-top:-25px;
     position: absolute;
-    
+
 }
 
 .full-width-select .ui-btn {
@@ -811,7 +811,7 @@ div.st-tile-content {
 }
 
 .footer {
-	position: absolute; 
+	position: absolute;
     bottom:7px; left:7px;
     font-size:10px;
     color: white;
@@ -889,11 +889,11 @@ def media() {
       width: 33.3%;
       padding-bottom: 33.3%;
    }
-   
+
    .size2x1 {
       width: 66.6%;
    }
-   
+
    .st-tile-content {
 	  left:2px;
       right:2px;
@@ -911,11 +911,11 @@ def media() {
       width: 25%;
       padding-bottom: 25%;
    }
-   
+
    .size2x1 {
       width: 50%;
    }
-   
+
    .st-tile-content {
 	  left:2px;
       right:2px;
@@ -933,11 +933,11 @@ def media() {
       width: 20%;
       padding-bottom: 20%;
    }
-   
+
    .size2x1 {
       width: 40%;
    }
-   
+
    .st-tile-content {
 	  left:2px;
       right:2px;
@@ -956,7 +956,7 @@ def media() {
       width: 16.6%;
       padding-bottom: 16.6%;
    }
-   
+
    .size2x1 {
       width: 33.2%;
    }
@@ -968,7 +968,7 @@ def media() {
       width: 14.2%;
       padding-bottom: 14.2%;
    }
-   
+
    .size2x1 {
       width: 28.4%;
    }
@@ -1094,12 +1094,12 @@ def renderRefresh() {
 
 def renderMode() {
 	if (!showMode) return ""
-    
+
     def mode = location.mode.toString()
-    
+
     def modeList = ""
     location.modes?.each{modeList = modeList + """<li data-icon="false"><a href="#" class="st-hello-home-button">$it<i class="spin fa fa-refresh fa-spin"></i></a></li>"""}
-    
+
     def modes = """<option value="$location.mode" selected="selected">$location.mode</option>"""
 
     location.modes.each {
@@ -1107,7 +1107,7 @@ def renderMode() {
             modes = modes + """<option value="$it">$it</option>\n"""
         }
     }
-    
+
 """
 <div id="mode_mode" class="st-tile mode">
 	<div class="st-tile-content">
@@ -1124,7 +1124,7 @@ def renderMode() {
             <i class="fa fa-moon-o" style="${mode != "Night" ? "display:none" : ""}" id="mode-night"></i>
             <i class="fa fa-sign-out" style="${mode != "Away" ? "display:none" : ""}" id="mode-away"></i>
         </div>
-        
+
         <div class="st-icon" style="${mode in ["Home", "Away", "Night"] ? "display:none;": ""} font-size:1.25em; height:2em;line-height:2em; margin-top:-1em;" id="mode-name">$location.mode</div>
         <i class="spin fa fa-refresh fa-spin"></i>
 	</div>
@@ -1134,7 +1134,7 @@ def renderMode() {
 
 def renderHelloHome() {
 	if (!phrases || !showHelloHome) return ""
-    
+
     def phraseList = ""
     phrases?.each{phraseList = phraseList + """<li data-icon="false"><a href="#" class="st-hello-home-button">$it</a></li>"""}
 
@@ -1192,7 +1192,7 @@ def renderHumidity(device) {
 
 def renderDimmer(device) {
 """
-<div id="dimmer_$device.id" class="st-tile $device.type" 
+<div id="dimmer_$device.id" class="st-tile $device.type"
 	deviceId="$device.id" deviceType="dimmer" deviceLevel="$device.level" deviceStatus="$device.status">
 	<div class="st-tile-content">
     	<div class="st-title">
@@ -1203,9 +1203,9 @@ def renderDimmer(device) {
         </div>
         <div class="full-width-slider" style="${viewOnly ? "display:none" : ""}">
             <label for="dimmer_$device.id" class="ui-hidden-accessible">Level:</label>
-            <input name="dimmer_$device.id" id="dimmer_$device.id" min="0" max="100" value="${device.status == "on" ? device.level : 0}" type="range" 
+            <input name="dimmer_$device.id" id="dimmer_$device.id" min="0" max="100" value="${device.status == "on" ? device.level : 0}" type="range"
             deviceLevel="$device.level"
-            data-show-value="false" data-mini="true" data-popup-enabled="true" 
+            data-show-value="false" data-mini="true" data-popup-enabled="true"
             data-disabled="$viewOnly"
             data-highlight="true" step="5" deviceId="$device.id">
 		</div>
@@ -1281,13 +1281,13 @@ def renderContact(device) {
 
 def renderWeather() {
 	if (!weather) return ""
-    
+
     def allWeatherTiles = ""
-    
+
     weather.each {
     	allWeatherTiles = allWeatherTiles + renderWeather(it)
     }
-	
+
     allWeatherTiles
 }
 
@@ -1338,7 +1338,7 @@ def renderWeather(device) {
         wm["$it"] = device?.currentValue("$it")
     }
     def icon = weatherIcons[wm.weatherIcon]
-    
+
 """
 <div id="weather" class="st-tile size2x1 weather">
 	<div class="st-tile-content" style="background-color: #A20025;">
@@ -1401,15 +1401,15 @@ def renderLink(i) {
     } else {
     	return ""
     }
-    
+
     if (!link) {
     	return ""
 	}
-    
+
     if (!title || title == "") {
     	title = "Link $i"
     }
-    
+
 """
 <div class="st-tile link" deviceType="link">
 	<div class="st-tile-content">
@@ -1445,11 +1445,11 @@ def renderDevice(device) {
     if (device.type == "humidity") return renderHumidity(device)
     if (device.type == "momentary") return renderMomentary(device)
     else return ""
-    
+
 }
 
 def body() {
-    
+
 	"""
     <div class="st-container" data-role="page">
     	<div data-role="content" data-theme="c">
