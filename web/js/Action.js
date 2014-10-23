@@ -83,6 +83,7 @@ Action.DeviceView = Marionette.ItemView.extend({
 
 	onRender: function() {
 		this.stickit();
+		this.$el.enhanceWithin();
 	},
 });
 
@@ -99,10 +100,40 @@ Action.ContactView = Action.DeviceView.extend({
 	}
 });
 
+Action.SwitchView = Action.DeviceView.extend({
+	initialize: function() {
+		_.extend(this.bindings, {
+			'.fa': {
+				observe: 'status',
+				update: function($el, val, model) {
+					val == 'off' ? $el.addClass('fa-toggle-off') : $el.addClass('fa-toggle-on');
+				}
+			}
+		});
+	}
+});
+
+Action.DimmerView = Action.DeviceView.extend({
+	initialize: function() {
+		_.extend(this.bindings, {
+			'.fa': {
+				observe: 'status',
+				update: function($el, val, model) {
+					val == 'off' ? $el.addClass('fa-toggle-off') : $el.addClass('fa-toggle-on');
+				}
+			}
+		});
+	},
+});
+
 Action.DevicesView = Marionette.CollectionView.extend({
 	getChildView: function(item) {
 		if (item instanceof Action.Contact) {
 			return Action.ContactView;
+		} else if (item instanceof Action.Dimmer) {
+			return Action.DimmerView;
+		} else if (item instanceof Action.Switch) {
+			return Action.SwitchView;
 		}
 
 		return Action.DeviceView;
