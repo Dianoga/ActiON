@@ -24,10 +24,10 @@
  *
  */
 definition(
-    name: "ActiON Dashboard",
-    namespace: "625alex",
-    author: "Alex Malikov",
-    description: "Self contained web dashboard.",
+    name: "REactiON Dashboard",
+    namespace: "dianoga",
+    author: "Brian Steere, Alex Malikov",
+    description: "Self contained web dashboard with optional superpowers.",
     category: "Convenience",
     iconUrl: "https://s3.amazonaws.com/smartthings-device-icons/unknown/thing/thing-circle.png",
     iconX2Url: "https://s3.amazonaws.com/smartthings-device-icons/unknown/thing/thing-circle@2x.png",
@@ -60,14 +60,12 @@ preferences {
             input "temperature", "capability.temperatureMeasurement", title: "Which Temperature?", multiple: true, required: false
             input "humidity", "capability.relativeHumidityMeasurement", title: "Which Hygrometer?", multiple: true, required: false
             input "motion", "capability.motionSensor", title: "Which Motion?", multiple: true, required: false
-            input "weather", "device.smartweatherStationTile", title: "Which Weather?", multiple: true, required: false
         }
     }
 
     page(name: "selectPreferences", title: "Preferences", install: true, unintall: true) {
         section("Dashboard Preferences...") {
         	label title: "Title", required: false
-            input "theme", title: "Theme", "enum", multiple: false, required: true, defaultValue: "Color", options: ["Color", "Black and White", "Grey"]
             input "viewOnly", title: "View Only", "bool", required: true, defaultValue: false
         }
 
@@ -106,6 +104,8 @@ def selectPhrases() {
         section("Show...") {
         	input "showMode", title: "Show Mode", "bool", required: true, defaultValue: true
             input "showClock", title: "Show Clock", "enum", multiple: false, required: true, defaultValue: "Digital", options: ["Digital", "Analog", "None"]
+            input "showWeather", title: "Show Weather", "bool", required: true, defaultValue: true
+            input "weatherLocation", title: "Weather Location", "text", required: false
         }
 
         section("Show Link 1...") {
@@ -327,7 +327,7 @@ def list() {
 }
 
 def data() {
-    [
+    def things = [
     	locks: locks?.collect{[type: "lock", id: it.id, name: it.displayName, status: it.currentValue('lock') == "locked" ? "locked" : "unlocked"]}?.sort{it.name},
         switches: switches?.collect{[type: "switch", id: it.id, name: it.displayName, status: it.currentValue('switch')]}?.sort{it.name},
         dimmers: dimmers?.collect{[type: "dimmer", id: it.id, name: it.displayName, status: it.currentValue('switch'), level: it.currentValue('level')]}?.sort{it.name},
@@ -337,8 +337,14 @@ def data() {
         motion: motion?.collect{[type: "motion", id: it.id, name: it.displayName, status: it.currentValue('motion')]}?.sort{it.name},
         temperature: temperature?.collect{[type: "temperature", id: it.id, name: it.displayName, status: roundNumber(it.currentValue('temperature'), "°")]}?.sort{it.name},
         humidity: humidity?.collect{[type: "humidity", id: it.id, name: it.displayName, status: roundNumber(it.currentValue('humidity'), "%")]}?.sort{it.name},
-        links: state.links
+        links: state.links,
     ]
+
+    if(showWeather) {
+        things.weather = [type: 'weather', status: getWeatherFeature('conditions', weatherLocation)]
+    }
+
+    return things
 }
 
 def roundNumber(num, unit) {
