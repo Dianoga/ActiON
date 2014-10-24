@@ -315,6 +315,7 @@ def getURL(e) {
 
 
 def scheduledWeatherRefresh() {
+	log.debug "Refreshing weather"
 	state.weather = getWeatherFeature('conditions', weatherLocation)
 }
 

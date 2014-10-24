@@ -74,6 +74,10 @@ Action.Temperatures = Action.DeviceTypes.extend({
 	model: Action.Temperature,
 });
 
+Action.Weather = Action.Device.extend({
+
+});
+
 Action.DeviceView = Marionette.ItemView.extend({
 	className: function() {
 		return 'st-tile ' + this.model.get('type');
