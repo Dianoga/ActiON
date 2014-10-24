@@ -277,6 +277,18 @@ def initialize() {
 	subscribe(app, getURL)
     scheduledWeatherRefresh()
     getURL(null)
+
+    // Put links into an array for data
+    state.links = [];
+    if(link1url) {
+        state.links.push([name: link1title, status: link1url]);
+    }
+    if(link2url) {
+        state.links.push([name: link2title, status: link2url]);
+    }
+    if(link3url) {
+        state.links.push([name: link3title, status: link3url]);
+    }
 }
 
 def getURL(e) {
@@ -325,6 +337,7 @@ def data() {
         motion: motion?.collect{[type: "motion", id: it.id, name: it.displayName, status: it.currentValue('motion')]}?.sort{it.name},
         temperature: temperature?.collect{[type: "temperature", id: it.id, name: it.displayName, status: roundNumber(it.currentValue('temperature'), "°")]}?.sort{it.name},
         humidity: humidity?.collect{[type: "humidity", id: it.id, name: it.displayName, status: roundNumber(it.currentValue('humidity'), "%")]}?.sort{it.name},
+        links: state.links
     ]
 }
 
