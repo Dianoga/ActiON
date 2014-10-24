@@ -4,11 +4,10 @@
 	<meta name="viewport" content="width=device-width" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<title>BackAction</title>
+	<title>ReAction</title>
 
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/weather-icons/1.2/css/weather-icons.min.css" />
 
 	<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="//code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
@@ -19,6 +18,7 @@
 
 	<script type="text/javascript" src="//cdn.jsdelivr.net/coolclock/2.1.4/coolclock.min.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/packery/1.1.2/packery.pkgd.min.js"></script>
+	<script type="text/javascript" src="//rawgit.com/darkskyapp/skycons/master/skycons.js"></script>
 
 	<link rel='stylesheet' href='css/app.css' />
 	<script type="text/javascript" src="js/Action.js"></script>
@@ -38,6 +38,20 @@
 		<div class="st-tile-content">
 			<div class="st-title">Device</div>
 			<div class="st-icon"><a><i class='fa fa-link'></i></a></div>
+		</div>
+	</script>
+	<script type='text/template' id='_st-weather'>
+		<div class="st-tile-content">
+			<div class="st-title">Device</div>
+			<canvas class='skycon' width='60' height='60'></canvas>
+			<div class='w-temperature' />
+			<div class='w-status' />
+			<div class='w-humidity' />
+			<div class='w-suntimes'>
+				<span class='sunrise' />
+				<i class='fa fa-sun-o' />
+				<span class='sunset' />
+			</div>
 		</div>
 	</script>
 	<script type='text/template' id='_st-dimmer'>

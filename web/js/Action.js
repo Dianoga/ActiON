@@ -75,7 +75,60 @@ Action.Temperatures = Action.DeviceTypes.extend({
 });
 
 Action.Weather = Action.Device.extend({
+	defaults: {
+		type: 'weather'
+	},
 
+	weatherIcons: {
+		"chanceflurries": "snow",
+		"chancerain": "rain",
+		"chancesleet": "sleet",
+		"chancesnow": "snow",
+		"chancetstorms": "rain",
+		"clear": "clear-day",
+		"cloudy": "cloudy",
+		"flurries": "snow",
+		"fog": "fog",
+		"hazy": "fog",
+		"mostlycloudy": "cloudy",
+		"mostlysunny": "clear-day",
+		"partlycloudy": "partly-cloudy-day",
+		"partlysunny": "partly-cloudy-day",
+		"rain": "rain",
+		"sleet": "sleet",
+		"snow": "snow",
+		"sunny": "clear-day",
+		"tstorms": "rain",
+		"nt_chanceflurries": "snow",
+		"nt_chancerain": "rain",
+		"nt_chancesleet": "sleet",
+		"nt_chancesnow": "snow",
+		"nt_chancetstorms": "rain",
+		"nt_clear": "clear-night",
+		"nt_cloudy": "cloudy",
+		"nt_flurries": "snow",
+		"nt_fog": "fog",
+		"nt_hazy": "fog",
+		"nt_mostlycloudy": "partly-cloudy-night",
+		"nt_mostlysunny": "partly-cloudy-night",
+		"nt_partlycloudy": "partly-cloudy-night",
+		"nt_partlysunny": "partly-cloudy-night",
+		"nt_sleet": "sleet",
+		"nt_rain": "rain",
+		"nt_snow": "snow",
+		"nt_sunny": "clear-night",
+		"nt_tstorms": "rain",
+	},
+
+	initialize: function() {
+		this.set('location', this.get('display_location').full);
+		this.set('skycon', this.weatherIcons[this.get('icon')]);
+
+		var sunrise = this.get('sunrise');
+		var sunset = this.get('sunset');
+		this.set('sunrise', sunrise.hour + ':' + sunrise.minute + ' AM');
+		this.set('sunset', (sunset.hour - 12) + ':' + sunset.minute + ' PM');
+	}
 });
 
 Action.DeviceView = Marionette.ItemView.extend({
@@ -187,6 +240,45 @@ Action.TemperatureView = Action.DeviceView.extend({
 
 Action.HumidityView = Action.TemperatureView.extend();
 
+Action.WeatherView = Action.DeviceView.extend({
+	bindings: {
+		'.st-title': 'location',
+		'.w-temperature': {
+			observe: 'temp_f',
+			onGet: function(val) {
+				return val + '\xb0';
+			}
+		},
+		'.w-humidity': {
+			observe: 'relative_humidity',
+			onGet: function(val) {
+				return 'Humidity: ' + val;
+			}
+		},
+		'.w-status': {
+			observe: ['weather', 'feelslike_f'],
+			onGet: function(val) {
+				return val[0] + ', feels like ' + val[1] + '\xb0';
+			}
+		},
+		'.sunrise': 'sunrise',
+		'.sunset': 'sunset',
+	},
+
+	initialize: function() {
+		this.skycons = new Skycons({
+			color: 'white'
+		});
+	},
+
+	onRender: function() {
+		this.stickit();
+		this.skycons.add(this.$el.find('canvas')[0], this.model.get('skycon'));
+		this.skycons.play();
+	},
+});
+
+
 Action.DevicesView = Marionette.CollectionView.extend({
 	getChildView: function(item) {
 		if (item instanceof Action.Contact) {
@@ -209,6 +301,8 @@ Action.DevicesView = Marionette.CollectionView.extend({
 			return Action.MomentaryView;
 		} else if (item instanceof Action.Link) {
 			return Action.LinkView;
+		} else if (item instanceof Action.Weather) {
+			return Action.WeatherView;
 		}
 
 		return Action.DeviceView;
@@ -250,6 +344,13 @@ Action.updateData = function() {
 			Action.presences.set(new Action.Presences(data.presence).models);
 			Action.switches.set(new Action.Switches(data.switches).models);
 			Action.temperatures.set(new Action.Temperatures(data.temperature).models);
+
+			var weather = new Action.Weather(_.extend(data.weather.status.conditions, data.weather.status.astronomy));
+
+			Action.devices.add(weather, {
+				at: 0,
+				merge: true
+			});
 		},
 	});
 };

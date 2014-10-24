@@ -16,9 +16,11 @@
   position: relative;
   width: 150px;
   height: 150px;
+  color: white;
+  text-shadow: none;
 }
-.st-tile.s1x2 {
-  width: 300px;
+.st-tile.s1x2, .st-tile.weather {
+  width: 310px;
 }
 .st-tile .st-tile-content {
   position: absolute;
@@ -30,7 +32,6 @@
   padding: 5px;
 }
 .st-tile .st-title {
-  color: white;
   font-size: 14px;
   line-height: 16px;
   font-weight: 400;
@@ -38,7 +39,6 @@
   text-shadow: none;
 }
 .st-tile .st-icon {
-  color: white;
   height: 3em;
   width: 3em;
   left: 50%;
@@ -99,7 +99,37 @@
   background-color: #34495e;
 }
 .st-tile.weather {
-  background-color: #e67e22;
+  background-color: #c0392b;
+}
+.st-tile.weather .skycon {
+  position: absolute;
+  top: 45px;
+  right: 40px;
+}
+.st-tile.weather .st-title {
+  font-size: 1.1em;
+}
+.st-tile.weather .w-status {
+  font-size: 0.95em;
+  position: absolute;
+  left: 1em;
+}
+.st-tile.weather .w-humidity {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.st-tile.weather .w-temperature {
+  position: absolute;
+  top: 50px;
+  right: 120px;
+  font-size: 2.5em;
+}
+.st-tile.weather .w-suntimes {
+  font-size: 0.9em;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .full-width-slider input {

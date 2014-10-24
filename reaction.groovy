@@ -316,7 +316,12 @@ def getURL(e) {
 
 def scheduledWeatherRefresh() {
 	log.debug "Refreshing weather"
-	state.weather = getWeatherFeature('conditions', weatherLocation)
+
+	def conditions = getWeatherFeature('conditions', weatherLocation)
+	def astronomy = getWeatherFeature('astronomy', weatherLocation)
+
+	state.weather.conditions = conditions.current_observation
+	state.weather.astronomy = astronomy.moon_phase
 }
 
 def index() {
