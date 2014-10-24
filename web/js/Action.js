@@ -14,6 +14,10 @@ Action.Devices = Backbone.Collection.extend({
 
 Action.DeviceTypes = Backbone.Collection.extend({
 	initialize: function() {
+		this.listenTo(this, 'all', function() {
+			console.log(arguments);
+		});
+
 		this.listenTo(this, 'add', function(model) {
 			Action.devices.add(model);
 		});
@@ -194,15 +198,15 @@ Action.updateData = function() {
 		},
 		success: function(data) {
 			console.log(data);
-			Action.contacts.set(data.contacts);
-			Action.dimmers.set(data.dimmers);
-			Action.humidities.set(data.humidity);
-			Action.locks.set(data.locks);
-			Action.momentaries.set(data.momentary);
-			Action.motions.set(data.motion);
-			Action.presences.set(data.presence);
-			Action.switches.set(data.switches);
-			Action.temperatures.set(data.temperature);
+			Action.contacts.set(new Action.Contacts(data.contacts).models);
+			Action.dimmers.set(new Action.Dimmers(data.dimmers).models);
+			Action.humidities.set(new Action.Humidities(data.humidity).models);
+			Action.locks.set(new Action.Locks(data.locks).models);
+			Action.momentaries.set(new Action.Momentaries(data.momentary).models);
+			Action.motions.set(new Action.Motions(data.motion).models);
+			Action.presences.set(new Action.Presences(data.presence).models);
+			Action.switches.set(new Action.Switches(data.switches).models);
+			Action.temperatures.set(new Action.Temperatures(data.temperature).models);
 		},
 	});
 };
