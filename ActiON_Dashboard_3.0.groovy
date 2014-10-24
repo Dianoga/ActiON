@@ -281,13 +281,13 @@ def initialize() {
     // Put links into an array for data
     state.links = [];
     if(link1url) {
-        state.links.push([name: link1title, status: link1url]);
+        state.links.push([id: '1', name: link1title, status: link1url, type: 'link']);
     }
     if(link2url) {
-        state.links.push([name: link2title, status: link2url]);
+        state.links.push([id: '2', name: link2title, status: link2url, type: 'link']);
     }
     if(link3url) {
-        state.links.push([name: link3title, status: link3url]);
+        state.links.push([id: '3', name: link3title, status: link3url, type: 'link']);
     }
 }
 

@@ -89,6 +89,9 @@
 .st-tile.link {
   background-color: #7f8c8d;
 }
+.st-tile.link a {
+  color: white;
+}
 .st-tile.refresh {
   background-color: #3498db;
 }

@@ -111,6 +111,10 @@ body {
 
 	&.link {
 		background-color: #7f8c8d;
+
+		a {
+			color: white;
+		}
 	}
 
 	&.refresh {

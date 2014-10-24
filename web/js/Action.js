@@ -44,6 +44,11 @@ Action.Locks = Action.DeviceTypes.extend({
 	model: Action.Lock,
 });
 
+Action.Link = Action.Device.extend();
+Action.Links = Action.DeviceTypes.extend({
+	model: Action.Link,
+});
+
 Action.Momentary = Action.Device.extend();
 Action.Momentaries = Action.DeviceTypes.extend({
 	model: Action.Momentary,
@@ -145,6 +150,24 @@ Action.MomentaryView = Action.DeviceView.extend({
 	},
 });
 
+Action.LinkView = Action.DeviceView.extend({
+	icons: {
+		'': 'fa-circle-o',
+	},
+
+	initialize: function() {
+		this.bindings = _.extend({}, this.bindings, {
+			'a': {
+				attributes: [{
+					observe: 'status',
+					name: 'href',
+				}],
+			}
+		});
+	},
+
+});
+
 Action.TemperatureView = Action.DeviceView.extend({
 	initialize: function() {
 		this.bindings = _.extend({}, this.bindings, {
@@ -180,6 +203,8 @@ Action.DevicesView = Marionette.CollectionView.extend({
 			return Action.LockView;
 		} else if (item instanceof Action.Momentary) {
 			return Action.MomentaryView;
+		} else if (item instanceof Action.Link) {
+			return Action.LinkView;
 		}
 
 		return Action.DeviceView;
@@ -215,6 +240,7 @@ Action.updateData = function() {
 			Action.dimmers.set(new Action.Dimmers(data.dimmers).models);
 			Action.humidities.set(new Action.Humidities(data.humidity).models);
 			Action.locks.set(new Action.Locks(data.locks).models);
+			Action.links.set(new Action.Links(data.links).models);
 			Action.momentaries.set(new Action.Momentaries(data.momentary).models);
 			Action.motions.set(new Action.Motions(data.motion).models);
 			Action.presences.set(new Action.Presences(data.presence).models);
@@ -231,6 +257,7 @@ Action.addInitializer(function() {
 	Action.dimmers = new Action.Dimmers();
 	Action.humidities = new Action.Humidities();
 	Action.locks = new Action.Locks();
+	Action.links = new Action.Links();
 	Action.momentaries = new Action.Momentaries();
 	Action.motions = new Action.Motions();
 	Action.presences = new Action.Presences();
