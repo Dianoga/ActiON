@@ -350,6 +350,22 @@ def data() {
 		things.weather = [type: 'weather', status: state.weather]
 	}
 
+	if(showMode) {
+		things.mode = [
+			type: 'mode',
+			status: location.mode.toString(),
+			modes: location.modes?.collect{it.name}
+		]
+	}
+
+	if(showHelloHome) {
+		things.hellohome = [
+			type: 'hellohome',
+			status: null,
+			phrases: phrases
+		]
+	}
+
 	return things
 }
 
