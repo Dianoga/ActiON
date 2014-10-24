@@ -1,7 +1,7 @@
 var Action = new Backbone.Marionette.Application();
 
-Action.uri = 'https://graph.api.smartthings.com/api/smartapps/installations/825c747f-6845-4d4d-a4db-e618856b01d2/';
-Action.access_token = 'd575b326-f7d7-4ee8-87af-1e83d7ad830a';
+Action.uri = 'https://graph.api.smartthings.com/api/smartapps/installations/ca03bd75-ea33-4e62-a6e0-247191657c5f/';
+Action.access_token = 'b89cb33c-e0fc-4723-b334-4978332e2ee9';
 
 Action.Device = Backbone.Model.extend({
 	initialize: function() {
@@ -14,10 +14,6 @@ Action.Devices = Backbone.Collection.extend({
 
 Action.DeviceTypes = Backbone.Collection.extend({
 	initialize: function() {
-		this.listenTo(this, 'all', function() {
-			console.log(arguments);
-		});
-
 		this.listenTo(this, 'add', function(model) {
 			Action.devices.add(model);
 		});
@@ -136,6 +132,13 @@ Action.MotionView = Action.DeviceView.extend({
 	},
 });
 
+Action.LockView = Action.DeviceView.extend({
+	icons: {
+		'unlocked': 'fa-unlock-alt',
+		'locked': 'fa-lock',
+	},
+});
+
 Action.TemperatureView = Action.DeviceView.extend({
 	initialize: function() {
 		this.bindings = _.extend({}, this.bindings, {
@@ -167,6 +170,8 @@ Action.DevicesView = Marionette.CollectionView.extend({
 			return Action.HumidityView;
 		} else if (item instanceof Action.Presence) {
 			return Action.PresenceView;
+		} else if (item instanceof Action.Lock) {
+			return Action.LockView;
 		}
 
 		return Action.DeviceView;
