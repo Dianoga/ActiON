@@ -139,6 +139,12 @@ Action.LockView = Action.DeviceView.extend({
 	},
 });
 
+Action.MomentaryView = Action.DeviceView.extend({
+	icons: {
+		'': 'fa-circle-o',
+	},
+});
+
 Action.TemperatureView = Action.DeviceView.extend({
 	initialize: function() {
 		this.bindings = _.extend({}, this.bindings, {
@@ -172,6 +178,8 @@ Action.DevicesView = Marionette.CollectionView.extend({
 			return Action.PresenceView;
 		} else if (item instanceof Action.Lock) {
 			return Action.LockView;
+		} else if (item instanceof Action.Momentary) {
+			return Action.MomentaryView;
 		}
 
 		return Action.DeviceView;
