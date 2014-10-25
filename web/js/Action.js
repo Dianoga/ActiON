@@ -153,8 +153,8 @@ Action.DeviceView = Marionette.ItemView.extend({
 	icons: {},
 
 	onRender: function() {
-		this.stickit();
 		this.$el.enhanceWithin();
+		this.stickit();
 	},
 
 	getIcon: function($el, val, model) {
@@ -185,7 +185,18 @@ Action.PresenceView = Action.DeviceView.extend({
 	},
 });
 
-Action.DimmerView = Action.SwitchView.extend();
+Action.DimmerView = Action.SwitchView.extend({
+	initialize: function() {
+		this.bindings = _.extend({}, this.bindings, {
+			'[name=dimmer]': {
+				observe: 'level',
+				update: function($el, val) {
+					$el.val(val).slider('refresh');
+				}
+			},
+		});
+	}
+});
 
 Action.MotionView = Action.DeviceView.extend({
 	icons: {
