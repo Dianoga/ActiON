@@ -102,6 +102,17 @@
   font-size: 1.5em;
   top: 90px;
 }
+.st-tile.mode .st-phrases {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.st-tile.mode .st-phrases a {
+  color: white;
+  text-decoration: none;
+}
 .st-tile.weather {
   background-color: #e51c23;
 }

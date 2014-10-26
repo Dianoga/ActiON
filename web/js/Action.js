@@ -368,7 +368,7 @@ Action.updateData = function() {
 			Action.temperatures.set(new Action.Temperatures(data.temperature).models);
 
 			var weather = new Action.Weather(_.extend(data.weather.status.conditions, data.weather.status.astronomy));
-			var mode = new Action.Mode(data.mode);
+			var mode = new Action.Mode(_.extend(data.hellohome, data.mode));
 
 			var opts = {
 				at: 0,
