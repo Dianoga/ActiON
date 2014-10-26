@@ -158,83 +158,81 @@ def command() {
 	def endState
 	def attribute
 
-	if (value == "toggle" && (type == "dimmer" || type == "switch")) {
-		device = (type == "dimmer" ? dimmers : switches)?.find{it.id == id}
-		attribute = "switch"
-
-		log.debug "command toggle for dimmer/switch $device"
-		if (device) {
-			if(value == "toggle") {
-				if(device.currentValue('switch') == "on") {
-					device.off()
-					endState = "off"
-				} else {
-					device.on()
-					endState = "on"
-				}
-			} else if (value == "on") {
-				device.on()
-				endState = "on"
-			} else if (value == "off") {
-				device.off()
-				endState = "off"
-			}
-		}
-	} else if (type == "dimmer" && value == "0") {
-		device = dimmers?.find{it.id == id}
-		attribute = "switch"
-		endState = "off"
-
-		if (device) {
-			device.setLevel(0)
-			device.off()
-		}
-	} else if (type == "dimmer") {
-		device = dimmers?.find{it.id == id}
-		attribute = "level"
-		endState = Math.min(value as Integer, 99) as String
-
-		if (device) {
-			device.setLevel(Math.min(value as Integer, 99))
-		}
-	} else if (type == "lock") {
-		device = locks?.find{it.id == id}
-		attribute = "lock"
-
-		if (device) {
-			log.debug "current lock status ${device.currentValue('lock')}"
-			if(device.currentValue('lock') == "locked") {
-				device.unlock()
-				endState = "unlocked"
-			} else {
-				device.lock()
-				endState = "locked"
-			}
-
-		}
-	} else if (type == "mode") {
-		setLocationMode(value)
-	} else if (type == "helloHome") {
-		device = "helloHome"
-		log.debug "executing Hello Home '$value'"
-		location.helloHome.execute(value)
-	} else if (type == "momentary") {
-		device = momentaries?.find{it.id == id}
-		if (device) {
-			device.push()
-		}
-	}
-
-	def isUpdated = waitForUpdate(type, device, endState, attribute)
-
 	def response = [:]
 
-	if (isUpdated) {
+	try {
+		if (value == "toggle" && (type == "dimmer" || type == "switch")) {
+			device = (type == "dimmer" ? dimmers : switches)?.find{it.id == id}
+			attribute = "switch"
+
+			log.debug "command toggle for dimmer/switch $device"
+			if (device) {
+				if(value == "toggle") {
+					if(device.currentValue('switch') == "on") {
+						device.off()
+						endState = "off"
+					} else {
+						device.on()
+						endState = "on"
+					}
+				} else if (value == "on") {
+					device.on()
+					endState = "on"
+				} else if (value == "off") {
+					device.off()
+					endState = "off"
+				}
+			}
+		} else if (type == "dimmer" && value == "0") {
+			device = dimmers?.find{it.id == id}
+			attribute = "switch"
+			endState = "off"
+
+			if (device) {
+				device.setLevel(0)
+				device.off()
+			}
+		} else if (type == "dimmer") {
+			device = dimmers?.find{it.id == id}
+			attribute = "level"
+			endState = Math.min(value as Integer, 99) as String
+
+			if (device) {
+				device.setLevel(Math.min(value as Integer, 99))
+			}
+		} else if (type == "lock") {
+			device = locks?.find{it.id == id}
+			attribute = "lock"
+
+			if (device) {
+				log.debug "current lock status ${device.currentValue('lock')}"
+				if(device.currentValue('lock') == "locked") {
+					device.unlock()
+					endState = "unlocked"
+				} else {
+					device.lock()
+					endState = "locked"
+				}
+
+			}
+		} else if (type == "mode") {
+			setLocationMode(value)
+		} else if (type == "helloHome") {
+			device = "helloHome"
+			log.debug "executing Hello Home '$value'"
+			location.helloHome.execute(value)
+		} else if (type == "momentary") {
+			device = momentaries?.find{it.id == id}
+			if (device) {
+				device.push()
+			}
+		}
+
 		response.status = "ok"
-	} else {
-		response.status = "refresh"
+	} catch (Exception e) {
+		response.status = 'error';
+		response.message = e.getMessage();
 	}
-	log.debug "isUpdated for $device : $isUpdated"
 
 	render contentType: "application/javascript", data: "${params.callback}(${response.encodeAsJSON()})"
 }
