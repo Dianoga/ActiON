@@ -239,27 +239,6 @@ def command() {
 	render contentType: "application/javascript", data: "${params.callback}(${response.encodeAsJSON()})"
 }
 
-/*
-	Hacked varsion of long poll. Will wait up to 15 seconds for the status to update. If times out without
-	ever updating, the page will be forsed to refresh right away.
-*/
-def waitForUpdate(type, device, endState, attribute) {
-	if (type == "mode" || type == "helloHome" || type == "momentary") return true
-
-	log.debug "about to check $device attribute $attribute for $endState"
-	if (device && endState && attribute) {
-		for (def i = 0; i < 5 ; i++ ) {
-			if (device.currentValue(attribute)?.toString() == endState) {
-				return true
-			} else {
-				log.debug "checking #$i, expected $device attribute $attribute to be $endState but was ${device.currentValue(attribute)}"
-				pause(3000)
-			}
-		}
-	}
-	return false
-}
-
 def installed() {
 	log.debug "Installed with settings: ${settings}"
 

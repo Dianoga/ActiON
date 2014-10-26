@@ -18,6 +18,13 @@
   height: 150px;
   color: white;
   text-shadow: none;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-duration: 0.3s;
+}
+.st-tile.updating {
+  opacity: 0.4;
 }
 .st-tile.s1x2, .st-tile.weather {
   width: 310px;

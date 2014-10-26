@@ -23,6 +23,16 @@ body {
 	color: white;
 	text-shadow: none;
 
+	-webkit-transition-property: opacity;
+	-webkit-transition-duration: 0.3s;
+
+	transition-property: opacity;
+	transition-duration: 0.3s;
+
+	&.updating {
+		opacity: 0.4;
+	}
+
 	&.s1x2 {
 		width: 310px;
 	}

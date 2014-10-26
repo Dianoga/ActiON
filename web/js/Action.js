@@ -6,8 +6,20 @@ Action.access_token = 'b89cb33c-e0fc-4723-b334-4978332e2ee9';
 Action.Device = Backbone.Model.extend({
 	initialize: function() {
 		this.set('id', this.get('type') + '_' + this.get('id'));
+		this.set('updating', false);
+	},
+
+	sendCommand: function(value) {
+		var model = this;
+
+		model.set('updating', true);
+		var id = model.get('id').split('_')[1];
+		Action.sendCommand(id, model.get('type'), value, function() {
+			Action.updateData();
+		});
 	}
 });
+
 Action.Devices = Backbone.Collection.extend({
 	model: Action.Device,
 });
@@ -127,6 +139,7 @@ Action.Weather = Action.Device.extend({
 	},
 
 	initialize: function() {
+		this.set('id', 'weather');
 		this.set('location', this.get('display_location').full);
 		this.set('skycon', this.weatherIcons[this.get('icon')]);
 
@@ -161,6 +174,11 @@ Action.DeviceView = Marionette.ItemView.extend({
 	onRender: function() {
 		this.$el.enhanceWithin();
 		this.stickit();
+
+		this.listenTo(this.model, 'change:updating', function() {
+			var updating = this.model.get('updating');
+			this.$el.toggleClass('updating', updating);
+		});
 	},
 
 	getIcon: function($el, val, model) {
@@ -182,13 +200,13 @@ Action.SwitchView = Action.DeviceView.extend({
 		'off': 'fa-toggle-off',
 		'on': 'fa-toggle-on',
 	},
-});
-
-Action.PresenceView = Action.DeviceView.extend({
-	icons: {
-		'not present': 'fa-map-marker-away',
-		'present': 'fa-map-marker',
+	events: {
+		'click': 'toggle',
 	},
+
+	toggle: function() {
+		this.model.sendCommand('toggle');
+	}
 });
 
 Action.DimmerView = Action.SwitchView.extend({
@@ -201,7 +219,21 @@ Action.DimmerView = Action.SwitchView.extend({
 				}
 			},
 		});
+
+		this.events['click .full-width-slider'] = 'dimmerClick';
+	},
+
+	dimmerClick: function(event) {
+		event.stopPropagation();
+		this.model.sendCommand(this.model.get('level'));
 	}
+});
+
+Action.PresenceView = Action.DeviceView.extend({
+	icons: {
+		'not present': 'fa-map-marker-away',
+		'present': 'fa-map-marker',
+	},
 });
 
 Action.MotionView = Action.DeviceView.extend({
@@ -424,6 +456,20 @@ Action.updateData = function() {
 	});
 };
 
+Action.sendCommand = function(id, type, value, complete) {
+	$.ajax({
+		url: Action.commandUri,
+		dataType: 'jsonp',
+		data: {
+			access_token: Action.access_token,
+			id: id,
+			type: type,
+			value: value,
+		},
+		complete: complete || function() {}
+	});
+}
+
 Action.addInitializer(function() {
 	Action.devices = new Action.Devices();
 
@@ -439,6 +485,7 @@ Action.addInitializer(function() {
 	Action.temperatures = new Action.Temperatures();
 
 	Action.dataUri = Action.uri + 'data';
+	Action.commandUri = Action.uri + 'command';
 	Action.updateData();
 
 	Action.addRegions({
