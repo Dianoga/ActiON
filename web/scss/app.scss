@@ -7,11 +7,11 @@ body {
 }
 
 .r45 {
-    -moz-transform:rotate(45deg);
-    -webkit-transform:rotate(45deg);
-    -o-transform:rotate(45deg);
-    -ms-transform:rotate(45deg);
-    transform:rotate(45deg)
+	-moz-transform:rotate(45deg);
+	-webkit-transform:rotate(45deg);
+	-o-transform:rotate(45deg);
+	-ms-transform:rotate(45deg);
+	transform:rotate(45deg)
 }
 
 .st-tile {
@@ -136,11 +136,11 @@ body {
 			left: 0;
 			width: 100%;
 			text-align: center;
+		}
 
-			a {
-				color: white;
-				text-decoration: none;
-			}
+		a {
+			color: white;
+			text-decoration: none;
 		}
 	}
 
@@ -188,22 +188,22 @@ body {
 }
 
 .full-width-slider input {
-    display: none;
+	display: none;
 }
 
 .full-width-slider {
-    width:140px;
-    height:50px;
-    bottom: 0;
-    position: absolute;
+	width:140px;
+	height:50px;
+	bottom: 0;
+	position: absolute;
 
-    .ui-slider-track {
-    	margin-left: 15px;
-    }
+	.ui-slider-track {
+		margin-left: 15px;
+	}
 
-    .ui-slider-popup {
-    	left: 25% !important;
-    }
+	.ui-slider-popup {
+		left: 25% !important;
+	}
 }
 
 // A pseudo icon to simplify things

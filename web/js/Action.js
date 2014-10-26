@@ -253,8 +253,51 @@ Action.TemperatureView = Action.DeviceView.extend({
 Action.ModeView = Action.DeviceView.extend({
 	initialize: function() {
 		this.bindings = _.extend({}, this.bindings, {
-			'.st-icon': 'status',
+			'.st-icon': {
+				observe: 'status',
+				update: function($el, val, model) {
+					var link = $('<a href="#modePopupMenu" data-rel="popup" data-transition="slideup" />').text(val);
+					var menu = $('<div data-role="popup" id="modePopupMenu" data-theme="b"/>');
+					var menuUl = $('<ul data-role="listview" data-insert="true" />');
+
+					_.each(model.get('modes'), function(mode) {
+						menuUl.append('<li><a href="#" data-rel="back" data-mode="' + mode + '">' + mode + '</a></li>');
+					});
+
+					menu.append(menuUl);
+					$el.append(link).append(menu).enhanceWithin();
+				}
+			},
+			'.st-phrases': {
+				observe: 'status',
+				update: function($el, val, model) {
+					var link = $('<a href="#phrasePopupMenu" data-rel="popup" data-transition="slideup" />').text('Hello Home');
+					var menu = $('<div data-role="popup" id="phrasePopupMenu" data-theme="b"/>');
+					var menuUl = $('<ul data-role="listview" data-insert="true" />');
+
+					_.each(model.get('phrases'), function(phrase) {
+						menuUl.append('<li><a href="#" data-rel="back" data-phrase="' + phrase + '">' + phrase + '</a></li>');
+					});
+
+					menu.append(menuUl);
+					$el.append(link).append(menu).enhanceWithin();
+				}
+			},
 		});
+	},
+
+	onRender: function() {
+		this.stickit();
+		$('#modePopupMenu').on('click', 'a', this.changeMode);
+		$('#phrasePopupMenu').on('click', 'a', this.changePhrase);
+	},
+
+	changeMode: function(event) {
+		console.log(event);
+	},
+
+	changePhrase: function(event) {
+		console.log(event);
 	}
 });
 
