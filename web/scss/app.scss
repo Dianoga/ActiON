@@ -77,7 +77,7 @@ body {
 
 		.st-icon {
 			font-size: 3em;
-			top: 120px;
+			top: 110px;
 		}
 	}
 
@@ -86,7 +86,7 @@ body {
 
 		.st-icon {
 			font-size: 3em;
-			top: 120px;
+			top: 110px;
 		}
 	}
 
@@ -124,6 +124,11 @@ body {
 
 	&.mode {
 		background-color: #34495e;
+
+		.st-icon {
+			font-size: 1.5em;
+			top: 90px;
+		}
 	}
 
 	&.weather {

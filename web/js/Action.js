@@ -74,6 +74,12 @@ Action.Temperatures = Action.DeviceTypes.extend({
 	model: Action.Temperature,
 });
 
+Action.Mode = Action.Device.extend({
+	defaults: {
+		name: 'Mode',
+	}
+});
+
 Action.Weather = Action.Device.extend({
 	defaults: {
 		type: 'weather'
@@ -239,12 +245,15 @@ Action.LinkView = Action.DeviceView.extend({
 Action.TemperatureView = Action.DeviceView.extend({
 	initialize: function() {
 		this.bindings = _.extend({}, this.bindings, {
-			'.st-icon': {
-				observe: 'status',
-				onGet: function(val) {
-					return val;
-				}
-			}
+			'.st-icon': 'status',
+		});
+	}
+});
+
+Action.ModeView = Action.DeviceView.extend({
+	initialize: function() {
+		this.bindings = _.extend({}, this.bindings, {
+			'.st-icon': 'status',
 		});
 	}
 });
@@ -314,6 +323,8 @@ Action.DevicesView = Marionette.CollectionView.extend({
 			return Action.LinkView;
 		} else if (item instanceof Action.Weather) {
 			return Action.WeatherView;
+		} else if (item instanceof Action.Mode) {
+			return Action.ModeView;
 		}
 
 		return Action.DeviceView;
@@ -357,11 +368,15 @@ Action.updateData = function() {
 			Action.temperatures.set(new Action.Temperatures(data.temperature).models);
 
 			var weather = new Action.Weather(_.extend(data.weather.status.conditions, data.weather.status.astronomy));
+			var mode = new Action.Mode(data.mode);
 
-			Action.devices.add(weather, {
+			var opts = {
 				at: 0,
 				merge: true
-			});
+			};
+
+			Action.devices.add(mode, opts);
+			Action.devices.add(weather, opts);
 		},
 	});
 };

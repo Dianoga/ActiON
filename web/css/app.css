@@ -62,14 +62,14 @@
 }
 .st-tile.temperature .st-icon {
   font-size: 3em;
-  top: 120px;
+  top: 110px;
 }
 .st-tile.humidity {
   background-color: #00bcd4;
 }
 .st-tile.humidity .st-icon {
   font-size: 3em;
-  top: 120px;
+  top: 110px;
 }
 .st-tile.momentary {
   background-color: #795548;
@@ -97,6 +97,10 @@
 }
 .st-tile.mode {
   background-color: #34495e;
+}
+.st-tile.mode .st-icon {
+  font-size: 1.5em;
+  top: 90px;
 }
 .st-tile.weather {
   background-color: #e51c23;
