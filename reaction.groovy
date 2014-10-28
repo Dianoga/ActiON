@@ -24,7 +24,7 @@
  *
  */
 definition(
-	name: "REactiON Dashboard",
+	name: "ReactiON Dashboard",
 	namespace: "dianoga",
 	author: "Brian Steere, Alex Malikov",
 	description: "Self contained web dashboard with optional superpowers.",
@@ -292,6 +292,7 @@ def scheduledWeatherRefresh() {
 	def conditions = getWeatherFeature('conditions', weatherLocation)
 	def astronomy = getWeatherFeature('astronomy', weatherLocation)
 
+	state.weather = [:]
 	state.weather.conditions = conditions.current_observation
 	state.weather.astronomy = astronomy.moon_phase
 }
@@ -385,12 +386,12 @@ def thePage() {
 	<script type='text/javascript' src='//rawgit.com/Dianoga/ActiON/master/web/js/Action.js'></script>
 
 	<script type='text/javascript'>
-		$().ready(function() {
+		\$().ready(function() {
 			Action.config = {
 				uri: 'https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/',
 				access_token: '${state.accessToken}',
-				Action.start();
-			}
+			};
+			Action.start();
 		});
 	</script>
 </head>
