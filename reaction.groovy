@@ -165,23 +165,18 @@ def command() {
 			device = (type == "dimmer" ? dimmers : switches)?.find{it.id == id}
 			attribute = "switch"
 
-			log.debug "command toggle for dimmer/switch $device"
 			if (device) {
-				if(value == "toggle") {
-					if(device.currentValue('switch') == "on") {
-						device.off()
-						endState = "off"
-					} else {
-						device.on()
-						endState = "on"
-					}
-				} else if (value == "on") {
-					device.on()
-					endState = "on"
-				} else if (value == "off") {
+				if(device.currentValue('switch') == "on") {
+					log.debug "Switching device off"
 					device.off()
 					endState = "off"
+				} else {
+					log.debug "Switching device on"
+					device.on()
+					endState = "on"
 				}
+			} else {
+				log.debug "Device not found"
 			}
 		} else if (type == "dimmer" && value == "0") {
 			device = dimmers?.find{it.id == id}
