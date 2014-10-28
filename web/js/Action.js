@@ -9,12 +9,13 @@ Action.Device = Backbone.Model.extend({
 		this.set('updating', false);
 	},
 
-	sendCommand: function(value) {
+	sendCommand: function(value, type) {
 		var model = this;
-
 		model.set('updating', true);
+
 		var id = model.get('id').split('_')[1];
-		Action.sendCommand(id, model.get('type'), value, function() {
+		var type = type || model.get('type');
+		Action.sendCommand(id, type, value, function() {
 			Action.updateData();
 		});
 	}
@@ -297,7 +298,7 @@ Action.ModeView = Action.DeviceView.extend({
 					});
 
 					menu.append(menuUl);
-					$el.append(link).append(menu).enhanceWithin();
+					$el.empty().append(link).append(menu).enhanceWithin();
 				}
 			},
 			'.st-phrases': {
@@ -312,7 +313,7 @@ Action.ModeView = Action.DeviceView.extend({
 					});
 
 					menu.append(menuUl);
-					$el.append(link).append(menu).enhanceWithin();
+					$el.empty().append(link).append(menu).enhanceWithin();
 				}
 			},
 		});
@@ -320,16 +321,16 @@ Action.ModeView = Action.DeviceView.extend({
 
 	onRender: function() {
 		this.stickit();
-		$('#modePopupMenu').on('click', 'a', this.changeMode);
-		$('#phrasePopupMenu').on('click', 'a', this.changePhrase);
+		$('#modePopupMenu').on('click', 'a', _.bind(this.changeMode, this));
+		$('#phrasePopupMenu').on('click', 'a', _.bind(this.changePhrase, this));
 	},
 
 	changeMode: function(event) {
-		console.log(event);
+		this.model.sendCommand($(event.currentTarget).data().mode, 'mode');
 	},
 
 	changePhrase: function(event) {
-		console.log(event);
+		this.model.sendCommand($(event.currentTarget).data().phrase, 'hellohome');
 	}
 });
 
