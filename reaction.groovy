@@ -383,6 +383,13 @@ def thePage() {
 
 	<link rel='stylesheet' href='//rawgit.com/Dianoga/ActiON/master/web/css/app.css' />
 	<script type='text/javascript' src='//rawgit.com/Dianoga/ActiON/master/web/js/Action.js'></script>
+
+	<script type='text/javascript'>
+		Action.config = {
+			uri: 'https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/',
+			access_token: '${state.accessToken}',
+		}
+	</script>
 </head>
 <body>
 	<div id='container' data-role='page'>

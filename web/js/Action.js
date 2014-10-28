@@ -428,7 +428,7 @@ Action.updateData = function() {
 		url: Action.dataUri,
 		dataType: 'jsonp',
 		data: {
-			access_token: Action.access_token,
+			access_token: Action.config.access_token,
 		},
 		success: function(data) {
 			console.log(data);
@@ -462,7 +462,7 @@ Action.sendCommand = function(id, type, value, complete) {
 		url: Action.commandUri,
 		dataType: 'jsonp',
 		data: {
-			access_token: Action.access_token,
+			access_token: Action.config.access_token,
 			id: id,
 			type: type,
 			value: value,
@@ -485,8 +485,8 @@ Action.addInitializer(function() {
 	Action.switches = new Action.Switches();
 	Action.temperatures = new Action.Temperatures();
 
-	Action.dataUri = Action.uri + 'data';
-	Action.commandUri = Action.uri + 'command';
+	Action.dataUri = Action.config.uri + 'data';
+	Action.commandUri = Action.config.uri + 'command';
 	Action.updateData();
 
 	Action.addRegions({
