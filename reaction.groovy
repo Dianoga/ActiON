@@ -230,8 +230,8 @@ def command() {
 
 		response.status = "ok"
 	} catch (Exception e) {
-		response.status = 'error';
-		response.message = e.getMessage();
+		response.status = 'error'
+		log.error e
 	}
 
 	render contentType: "application/javascript", data: "${params.callback}(${response.encodeAsJSON()})"
@@ -384,7 +384,7 @@ def thePage() {
 
 	<script type='text/javascript' src='//cdn.jsdelivr.net/coolclock/2.1.4/coolclock.min.js'></script>
 	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/packery/1.1.2/packery.pkgd.min.js'></script>
-	<script type='text/javascript' src='//rawgit.com/darkskyapp/skycons/master/skycons.js'></script>
+	<script type='text/javascript' src='//cdn.rawgit.com/darkskyapp/skycons/master/skycons.js'></script>
 
 	<link rel='stylesheet' href='//rawgit.com/Dianoga/ActiON/master/web/css/app.css' />
 	<script type='text/javascript' src='//rawgit.com/Dianoga/ActiON/master/web/js/Action.js'></script>
