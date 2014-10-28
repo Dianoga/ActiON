@@ -1,8 +1,5 @@
 var Action = new Backbone.Marionette.Application();
 
-Action.uri = 'https://graph.api.smartthings.com/api/smartapps/installations/ca03bd75-ea33-4e62-a6e0-247191657c5f/';
-Action.access_token = 'b89cb33c-e0fc-4723-b334-4978332e2ee9';
-
 Action.Device = Backbone.Model.extend({
 	initialize: function() {
 		this.set('id', this.get('type') + '_' + this.get('id'));
@@ -323,6 +320,11 @@ Action.ModeView = Action.DeviceView.extend({
 		this.stickit();
 		$('#modePopupMenu').on('click', 'a', _.bind(this.changeMode, this));
 		$('#phrasePopupMenu').on('click', 'a', _.bind(this.changePhrase, this));
+
+		this.listenTo(this.model, 'change:updating', function() {
+			var updating = this.model.get('updating');
+			this.$el.toggleClass('updating', updating);
+		});
 	},
 
 	changeMode: function(event) {
