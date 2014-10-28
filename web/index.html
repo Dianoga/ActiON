@@ -31,10 +31,13 @@
 	-->
 
 	<script type='text/javascript'>
-		Action.config = {
-			uri: 'https://graph.api.smartthings.com/api/smartapps/installations/ca03bd75-ea33-4e62-a6e0-247191657c5f/',
-			access_token: 'b89cb33c-e0fc-4723-b334-4978332e2ee9',
-		}
+		$().ready(function() {
+			Action.config = {
+				uri: 'https://graph.api.smartthings.com/api/smartapps/installations/ca03bd75-ea33-4e62-a6e0-247191657c5f/',
+				access_token: 'b89cb33c-e0fc-4723-b334-4978332e2ee9',
+			}
+			Action.start();
+		});
 	</script>
 </head>
 <body>

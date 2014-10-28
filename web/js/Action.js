@@ -499,7 +499,3 @@ Action.addInitializer(function() {
 		collection: Action.devices
 	}));
 });
-
-$().ready(function() {
-	Action.start();
-});

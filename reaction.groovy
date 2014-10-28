@@ -385,10 +385,13 @@ def thePage() {
 	<script type='text/javascript' src='//rawgit.com/Dianoga/ActiON/master/web/js/Action.js'></script>
 
 	<script type='text/javascript'>
-		Action.config = {
-			uri: 'https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/',
-			access_token: '${state.accessToken}',
-		}
+		$().ready(function() {
+			Action.config = {
+				uri: 'https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/',
+				access_token: '${state.accessToken}',
+				Action.start();
+			}
+		});
 	</script>
 </head>
 <body>
