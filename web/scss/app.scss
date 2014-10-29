@@ -3,7 +3,6 @@ body {
 
 #container {
 	background: #1d1d1d;
-	padding: 10px;
 }
 
 .r45 {
@@ -14,11 +13,36 @@ body {
 	transform:rotate(45deg)
 }
 
+.st-tile-content {
+	position: absolute;
+	left: 5px;
+	right: 5px;
+	top: 5px;
+	bottom: 5px;
+	overflow: hidden;
+	padding: 5px;
+
+	// Colors
+	.contact & { background-color: #9c27b0; }
+	.switch & { background-color: #ff5722; }
+	.temperature & { background-color: #3f51b5; }
+	.humidity & { background-color: #00bcd4; }
+	.momentary & { background-color: #795548; }
+	.motion & { background-color: #607d8b; }
+	.lock & { background-color: #e91e63; }
+	.presence & { background-color: #259b24; }
+	.dimmer & { background-color: #009688; }
+	.link & { background-color: #ff9800; }
+	.refresh & { background-color: #3498db; }
+	.mode & { background-color: #34495e; }
+	.weather & { background-color: #03a9f4; }
+}
+
 .st-tile {
 	float: left;
 	position: relative;
-	width: 150px;
-	height: 150px;
+	width: 10%;
+	padding-bottom: 10%;
 
 	color: white;
 	text-shadow: none;
@@ -34,17 +58,7 @@ body {
 	}
 
 	&.s1x2 {
-		width: 310px;
-	}
-
-	.st-tile-content {
-		position: absolute;
-		left: 5px;
-		right: 5px;
-		top: 5px;
-		bottom: 5px;
-		overflow: hidden;
-		padding: 5px;
+		width: 20%;
 	}
 
 	.st-title {
@@ -71,70 +85,32 @@ body {
 	}
 
 	&.contact {
-		background-color: #9c27b0;
-
 		.fa {
 			@extend .r45;
 		}
 	}
 
-	&.switch {
-		background-color: #ff5722;
-	}
-
 	&.temperature {
-		background-color: #3f51b5;
-
 		.st-icon {
 			font-size: 3em;
-			top: 110px;
+			top: 75%;
 		}
 	}
 
 	&.humidity {
-		background-color: #00bcd4;
-
 		.st-icon {
 			font-size: 3em;
-			top: 110px;
+			top: 75%;
 		}
 	}
 
-	&.momentary {
-		background-color: #795548;
-	}
-
-	&.motion {
-		background-color: #607d8b;
-	}
-
-	&.lock {
-		background-color: #e91e63;
-	}
-
-	&.presence {
-		background-color: #259b24;
-	}
-
-	&.dimmer {
-		background-color: #009688;
-	}
-
 	&.link {
-		background-color: #ff9800;
-
 		a {
 			color: white;
 		}
 	}
 
-	&.refresh {
-		background-color: #3498db;
-	}
-
 	&.mode {
-		background-color: #34495e;
-
 		.st-icon {
 			font-size: 1.5em;
 			top: 90px;
@@ -156,8 +132,6 @@ body {
 
 	&.weather {
 		@extend .s1x2;
-
-		background-color: #03a9f4;
 
 		.skycon {
 			position: absolute;

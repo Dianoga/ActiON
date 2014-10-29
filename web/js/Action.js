@@ -415,7 +415,6 @@ Action.DevicesView = Marionette.CollectionView.extend({
 	onRender: function() {
 		this.$el.packery({
 			itemSelector: '.st-tile',
-			gutter: 10,
 		});
 
 		this.listenTo(this, 'childview:show', function(view) {

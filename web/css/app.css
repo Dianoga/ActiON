@@ -1,6 +1,5 @@
 #container {
   background: #1d1d1d;
-  padding: 10px;
 }
 
 .r45, .st-tile.contact .fa {
@@ -11,11 +10,60 @@
   transform: rotate(45deg);
 }
 
+.st-tile-content {
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  overflow: hidden;
+  padding: 5px;
+}
+.contact .st-tile-content {
+  background-color: #9c27b0;
+}
+.switch .st-tile-content {
+  background-color: #ff5722;
+}
+.temperature .st-tile-content {
+  background-color: #3f51b5;
+}
+.humidity .st-tile-content {
+  background-color: #00bcd4;
+}
+.momentary .st-tile-content {
+  background-color: #795548;
+}
+.motion .st-tile-content {
+  background-color: #607d8b;
+}
+.lock .st-tile-content {
+  background-color: #e91e63;
+}
+.presence .st-tile-content {
+  background-color: #259b24;
+}
+.dimmer .st-tile-content {
+  background-color: #009688;
+}
+.link .st-tile-content {
+  background-color: #ff9800;
+}
+.refresh .st-tile-content {
+  background-color: #3498db;
+}
+.mode .st-tile-content {
+  background-color: #34495e;
+}
+.weather .st-tile-content {
+  background-color: #03a9f4;
+}
+
 .st-tile {
   float: left;
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 10%;
+  padding-bottom: 10%;
   color: white;
   text-shadow: none;
   -webkit-transition-property: opacity;
@@ -27,16 +75,7 @@
   opacity: 0.4;
 }
 .st-tile.s1x2, .st-tile.weather {
-  width: 310px;
-}
-.st-tile .st-tile-content {
-  position: absolute;
-  left: 5px;
-  right: 5px;
-  top: 5px;
-  bottom: 5px;
-  overflow: hidden;
-  padding: 5px;
+  width: 20%;
 }
 .st-tile .st-title {
   font-size: 14px;
@@ -58,52 +97,16 @@
 .st-tile .st-icon .fa, .st-tile .st-icon .wi {
   font-size: 3em;
 }
-.st-tile.contact {
-  background-color: #9c27b0;
-}
-.st-tile.switch {
-  background-color: #ff5722;
-}
-.st-tile.temperature {
-  background-color: #3f51b5;
-}
 .st-tile.temperature .st-icon {
   font-size: 3em;
-  top: 110px;
-}
-.st-tile.humidity {
-  background-color: #00bcd4;
+  top: 75%;
 }
 .st-tile.humidity .st-icon {
   font-size: 3em;
-  top: 110px;
-}
-.st-tile.momentary {
-  background-color: #795548;
-}
-.st-tile.motion {
-  background-color: #607d8b;
-}
-.st-tile.lock {
-  background-color: #e91e63;
-}
-.st-tile.presence {
-  background-color: #259b24;
-}
-.st-tile.dimmer {
-  background-color: #009688;
-}
-.st-tile.link {
-  background-color: #ff9800;
+  top: 75%;
 }
 .st-tile.link a {
   color: white;
-}
-.st-tile.refresh {
-  background-color: #3498db;
-}
-.st-tile.mode {
-  background-color: #34495e;
 }
 .st-tile.mode .st-icon {
   font-size: 1.5em;
@@ -119,9 +122,6 @@
 .st-tile.mode a {
   color: white;
   text-decoration: none;
-}
-.st-tile.weather {
-  background-color: #03a9f4;
 }
 .st-tile.weather .skycon {
   position: absolute;
