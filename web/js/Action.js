@@ -218,7 +218,7 @@ Action.DimmerView = Action.SwitchView.extend({
 			},
 		});
 
-		this.events['click .full-width-slider'] = 'dimmerClick';
+		this.$el.on('slidestop', _.bind(this.dimmerClick, this));
 	},
 
 	dimmerClick: function(event) {
