@@ -15,6 +15,22 @@ body {
 	transform:rotate(45deg)
 }
 
+.st-tile {
+	float: left;
+	position: relative;
+	width: 10%;
+	padding-bottom: 10%;
+
+	color: white;
+	text-shadow: none;
+
+	-webkit-transition-property: opacity;
+	-webkit-transition-duration: 0.3s;
+
+	transition-property: opacity;
+	transition-duration: 0.3s;
+}
+
 .st-tile-content {
 	position: absolute;
 	left: 5px;
@@ -43,131 +59,110 @@ body {
 	.weather & { background-color: #03a9f4; }
 }
 
-.st-tile {
-	float: left;
-	position: relative;
-	width: 10%;
-	padding-bottom: 10%;
+.updating {
+	opacity: 0.4;
+}
 
-	color: white;
+.s1x2 {
+	width: 20%;
+}
+
+.st-title {
+	font-size: 14px;
+	line-height: 16px;
+	font-weight:400;
+	font-style: normal;
 	text-shadow: none;
+}
 
-	-webkit-transition-property: opacity;
-	-webkit-transition-duration: 0.3s;
+.st-icon {
+	margin: auto;
+	text-align: center;
 
-	transition-property: opacity;
-	transition-duration: 0.3s;
+	.fa, .wi {
+		font-size:3em;
+	}
+}
 
-	&.updating {
-		opacity: 0.4;
+.contact .fa {
+	@extend .r45;
+
+}
+
+.temperature .st-icon {
+	font-size: 2em;
+	top: 75%;
+}
+
+.humidity .st-icon {
+	font-size: 2em;
+	top: 75%;
+}
+
+.link {
+	a {
+		color: white;
+	}
+}
+
+.mode {
+	.st-icon {
+		font-size: 1.5em;
+		top: 70%;
 	}
 
-	&.s1x2 {
-		width: 20%;
+	.st-phrases {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		text-align: center;
+	}
+
+	a {
+		color: white;
+		text-decoration: none;
+	}
+}
+
+.weather {
+	@extend .s1x2;
+
+	.skycon {
+		position: absolute;
+		top: 35%;
+		right: 20%;
 	}
 
 	.st-title {
-		font-size: 14px;
-		line-height: 16px;
-		font-weight:400;
-		font-style: normal;
-		text-shadow: none;
+		font-size: 1.1em;
 	}
 
-	.st-icon {
-		margin: auto;
-		text-align: center;
-
-		.fa, .wi {
-			font-size:3em;
-		}
+	.w-status {
+		font-size: 0.95em;
+		position: absolute;
+		left: 1em;
 	}
 
-	&.contact {
-		.fa {
-			@extend .r45;
-		}
+	.w-humidity {
+		position: absolute;
+		bottom: 1%;
+		right: 1%;
+		font-size: 0.9em;
 	}
 
-	&.temperature {
-		.st-icon {
-			font-size: 2em;
-			top: 75%;
-		}
+	.w-temperature {
+		position: absolute;
+		top: 40%;
+		left: 20%;
+		font-size: 2em;
 	}
 
-	&.humidity {
-		.st-icon {
-			font-size: 2em;
-			top: 75%;
-		}
-	}
-
-	&.link {
-		a {
-			color: white;
-		}
-	}
-
-	&.mode {
-		.st-icon {
-			font-size: 1.5em;
-			top: 70%;
-		}
-
-		.st-phrases {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			text-align: center;
-		}
-
-		a {
-			color: white;
-			text-decoration: none;
-		}
-	}
-
-	&.weather {
-		@extend .s1x2;
-
-		.skycon {
-			position: absolute;
-			top: 35%;
-			right: 20%;
-		}
-
-		.st-title {
-			font-size: 1.1em;
-		}
-
-		.w-status {
-			font-size: 0.95em;
-			position: absolute;
-			left: 1em;
-		}
-
-		.w-humidity {
-			position: absolute;
-			bottom: 1%;
-			right: 1%;
-			font-size: 0.9em;
-		}
-
-		.w-temperature {
-			position: absolute;
-			top: 40%;
-			left: 20%;
-			font-size: 2em;
-		}
-
-		.w-suntimes {
-			font-size: 0.9em;
-			position: absolute;
-			bottom: 1%;
-			left: 1%;
-		}
+	.w-suntimes {
+		font-size: 0.9em;
+		position: absolute;
+		bottom: 1%;
+		left: 1%;
 	}
 }
 
