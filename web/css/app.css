@@ -146,11 +146,11 @@
 @media only screen and (max-width: 480px) {
   /* Smartphone view: 3 tile */
   .st-tile {
-    width: 33.3%;
-    padding-bottom: 33.3%; }
+    width: 33.3333333333%;
+    padding-bottom: 33.3333333333%; }
 
-  .size2x1 {
-    width: 66.6%; }
+  .s1x2, .st-tile.weather {
+    width: 66.6666666667%; }
 
   .st-tile-content {
     left: 2px;
@@ -197,11 +197,11 @@
 @media only screen and (max-width: 850px) and (min-width: 651px) {
   /* Small desktop / ipad view: 6 tiles */
   .st-tile {
-    width: 16.6%;
-    padding-bottom: 16.6%; }
+    width: 16.6666666667%;
+    padding-bottom: 16.6666666667%; }
 
   .s1x2, .st-tile.weather {
-    width: 33.2%; } }
+    width: 33.3333333333%; } }
 @media only screen and (max-width: 1050px) and (min-width: 851px) {
   /* Small desktop / ipad view: 7 tiles */
   .st-tile {
