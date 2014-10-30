@@ -413,13 +413,13 @@ Action.DevicesView = Marionette.CollectionView.extend({
 	},
 
 	onRender: function() {
-		this.$el.packery({
-			itemSelector: '.st-tile',
-		});
+		// this.$el.packery({
+		// 	itemSelector: '.st-tile',
+		// });
 
-		this.listenTo(this, 'childview:show', function(view) {
-			this.$el.packery('reloadItems').packery();
-		});
+		// this.listenTo(this, 'childview:show', function(view) {
+		// 	this.$el.packery('reloadItems').packery();
+		// });
 	}
 });
 
