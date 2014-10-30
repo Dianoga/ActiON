@@ -22,20 +22,20 @@ body {
 	overflow: hidden;
 	padding: 5px;
 
-	// Colors
-	.contact & { background-color: #9c27b0; }
-	.switch & { background-color: #ff5722; }
-	.temperature & { background-color: #3f51b5; }
-	.humidity & { background-color: #00bcd4; }
-	.momentary & { background-color: #795548; }
-	.motion & { background-color: #607d8b; }
-	.lock & { background-color: #e91e63; }
-	.presence & { background-color: #259b24; }
-	.dimmer & { background-color: #009688; }
-	.link & { background-color: #ff9800; }
-	.refresh & { background-color: #3498db; }
-	.mode & { background-color: #34495e; }
-	.weather & { background-color: #03a9f4; }
+// Colors
+.contact & { background-color: #9c27b0; }
+.switch & { background-color: #ff5722; }
+.temperature & { background-color: #3f51b5; }
+.humidity & { background-color: #00bcd4; }
+.momentary & { background-color: #795548; }
+.motion & { background-color: #607d8b; }
+.lock & { background-color: #e91e63; }
+.presence & { background-color: #259b24; }
+.dimmer & { background-color: #009688; }
+.link & { background-color: #ff9800; }
+.refresh & { background-color: #3498db; }
+.mode & { background-color: #34495e; }
+.weather & { background-color: #03a9f4; }
 }
 
 .st-tile {
@@ -194,4 +194,106 @@ body {
 .fa-map-marker-away:before {
 	content: "\f041";
 	opacity: 0.4;
+}
+
+@media only screen and (max-width : 480px) {
+	/* Smartphone view: 3 tile */
+	.st-tile {
+		width: 33.3%;
+		padding-bottom: 33.3%;
+	}
+
+	.size2x1 {
+		width: 66.6%;
+	}
+
+	.st-tile-content {
+		left:2px;
+		right:2px;
+		top:2px;
+		bottom:2px;
+	}
+	.ui-content {
+		padding:0;
+	}
+}
+
+@media only screen and (max-width : 565px) and (min-width : 481px) {
+	/* Tablet view: 4 tiles */
+	.st-tile {
+		width: 25%;
+		padding-bottom: 25%;
+	}
+
+	.s1x2 {
+		width: 50%;
+	}
+
+	.st-tile-content {
+		left:2px;
+		right:2px;
+		top:2px;
+		bottom:2px;
+	}
+	.ui-content {
+		padding:0px;
+	}
+}
+
+@media only screen and (max-width : 650px) and (min-width : 566px) {
+	/* Tablet view: 5 tiles */
+	.st-tile {
+		width: 20%;
+		padding-bottom: 20%;
+	}
+
+	.s1x2 {
+		width: 40%;
+	}
+
+	.st-tile-content {
+		left:2px;
+		right:2px;
+		top:2px;
+		bottom:2px;
+	}
+	.ui-content {
+		padding:0px;
+	}
+}
+
+
+@media only screen and (max-width : 850px) and (min-width : 651px) {
+	/* Small desktop / ipad view: 6 tiles */
+	.st-tile {
+		width: 16.6%;
+		padding-bottom: 16.6%;
+	}
+
+	.s1x2 {
+		width: 33.2%;
+	}
+}
+
+@media only screen and (max-width : 1050px) and (min-width : 851px) {
+	/* Small desktop / ipad view: 7 tiles */
+	.st-tile {
+		width: 14.2%;
+		padding-bottom: 14.2%;
+	}
+
+	.s1x2 {
+		width: 28.4%;
+	}
+}
+
+@media only screen and (max-width : 1290px) and (min-width : 1051px) {
+	/* Medium desktop: 8 tiles */
+	.st-tile {
+		width: 12.5%;
+		padding-bottom: 12.5%;
+	}
+	.s1x2 {
+		width: 25%;
+	}
 }
