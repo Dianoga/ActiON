@@ -1,3 +1,5 @@
+@import 'flex';
+
 body {
 }
 
@@ -21,6 +23,9 @@ body {
 	bottom: 5px;
 	overflow: hidden;
 	padding: 5px;
+
+	@include flexbox();
+	@include flex-direction(column);
 
 	// Colors
 	.contact & { background-color: #9c27b0; }
@@ -70,13 +75,7 @@ body {
 	}
 
 	.st-icon {
-		height: 3em;
-		width: 3em;
-		left: 50%;
-		top: 55%;
-		margin-left: -1.5em;
-		margin-top: -1.5em;
-		position: absolute;
+		margin: auto;
 		text-align: center;
 
 		.fa, .wi {

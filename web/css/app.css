@@ -15,7 +15,18 @@
   top: 5px;
   bottom: 5px;
   overflow: hidden;
-  padding: 5px; }
+  padding: 5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column; }
   .contact .st-tile-content {
     background-color: #9c27b0; }
   .switch .st-tile-content {
@@ -65,13 +76,7 @@
     font-style: normal;
     text-shadow: none; }
   .st-tile .st-icon {
-    height: 3em;
-    width: 3em;
-    left: 50%;
-    top: 55%;
-    margin-left: -1.5em;
-    margin-top: -1.5em;
-    position: absolute;
+    margin: auto;
     text-align: center; }
     .st-tile .st-icon .fa, .st-tile .st-icon .wi {
       font-size: 3em; }
