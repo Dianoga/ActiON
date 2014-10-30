@@ -73,7 +73,7 @@ body {
 		height: 3em;
 		width: 3em;
 		left: 50%;
-		top: 50%;
+		top: 55%;
 		margin-left: -1.5em;
 		margin-top: -1.5em;
 		position: absolute;
@@ -92,14 +92,14 @@ body {
 
 	&.temperature {
 		.st-icon {
-			font-size: 3em;
+			font-size: 2em;
 			top: 75%;
 		}
 	}
 
 	&.humidity {
 		.st-icon {
-			font-size: 3em;
+			font-size: 2em;
 			top: 75%;
 		}
 	}
@@ -113,7 +113,7 @@ body {
 	&.mode {
 		.st-icon {
 			font-size: 1.5em;
-			top: 90px;
+			top: 70%;
 		}
 
 		.st-phrases {
@@ -135,8 +135,8 @@ body {
 
 		.skycon {
 			position: absolute;
-			top: 45px;
-			right: 40px;
+			top: 35%;
+			right: 20%;
 		}
 
 		.st-title {
@@ -151,22 +151,23 @@ body {
 
 		.w-humidity {
 			position: absolute;
-			bottom: 0;
-			right: 0;
+			bottom: 1%;
+			right: 1%;
+			font-size: 0.9em;
 		}
 
 		.w-temperature {
 			position: absolute;
-			top: 50px;
-			right: 120px;
-			font-size: 2.5em;
+			top: 40%;
+			left: 20%;
+			font-size: 2em;
 		}
 
 		.w-suntimes {
 			font-size: 0.9em;
 			position: absolute;
-			bottom: 0;
-			left: 0;
+			bottom: 1%;
+			left: 1%;
 		}
 	}
 }
@@ -176,9 +177,9 @@ body {
 }
 
 .full-width-slider {
-	width:140px;
-	height:50px;
+	width: 100%;
 	bottom: 0;
+	left: 0;
 	position: absolute;
 
 	.ui-slider-track {
