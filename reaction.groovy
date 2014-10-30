@@ -422,7 +422,7 @@ def thePage() {
 	<script type='text/template' id='_st-weather'>
 		<div class='st-tile-content'>
 			<div class='st-title'>Device</div>
-			<canvas class='skycon' width='60' height='60'></canvas>
+			<canvas class='skycon' width='50' height='50'></canvas>
 			<div class='w-temperature' />
 			<div class='w-status' />
 			<div class='w-humidity' />
