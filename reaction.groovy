@@ -390,6 +390,7 @@ def thePage() {
 			Action.config = {
 				uri: 'https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/',
 				access_token: '${state.accessToken}',
+				refresh: ${interval},
 			};
 			Action.start();
 		});

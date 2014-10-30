@@ -454,6 +454,10 @@ Action.updateData = function() {
 
 			Action.devices.add(mode, opts);
 			Action.devices.add(weather, opts);
+
+			if (Action.config.refresh) {
+				Action.refreshTimeout = _.delay(Action.updateData, Action.config.refresh * 60 * 1000);
+			}
 		},
 	});
 };
