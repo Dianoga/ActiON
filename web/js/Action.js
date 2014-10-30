@@ -432,7 +432,6 @@ Action.updateData = function() {
 			access_token: Action.config.access_token,
 		},
 		success: function(data) {
-			console.log(data);
 			Action.contacts.set(new Action.Contacts(data.contacts).models);
 			Action.dimmers.set(new Action.Dimmers(data.dimmers).models);
 			Action.humidities.set(new Action.Humidities(data.humidity).models);
