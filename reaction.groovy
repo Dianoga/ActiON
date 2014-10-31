@@ -59,7 +59,10 @@ preferences {
 		}
 
 		section("Automatically refresh dashboard...") {
-			input "interval", "decimal", title: "Interval (in minutes)", required: true, defaultValue:2
+			input "interval", "decimal", title: "Interval (in minutes, ignored if you use pusher)", required: false, defaultValue:2
+			input "pusherAppId", "text", title: "Pusher Application ID", required: false
+			input "pusherAppKey", "text", title: "Pusher Application Key", required: false
+			input "pusherAppSecret", "text", title: "Pusher Application Secret", required: false
 		}
 
 		section("Reset AOuth Access Token...") {
@@ -253,24 +256,26 @@ def initialize() {
 		state.links.push([id: '3', name: link3title, status: link3url, type: 'link']);
 	}
 
-	subscribe(locks, 'lock', handleEvent)
-	subscribe(switches, 'switch', handleEvent)
-	subscribe(dimmers, 'switch', handleEvent)
-	subscribe(dimmers, 'level', handleEvent)
-	subscribe(momentaries, 'momentary', handleEvent)
-	subscribe(contacts, 'contact', handleEvent)
-	subscribe(presence, 'presence', handleEvent)
-	subscribe(motion, 'motion', handleEvent)
-	subscribe(temperature, 'temperature', handleEvent)
-	subscribe(humidity, 'humidity', handleEvent)
+	if(pusherAppId && pusherAppSecret && pusherAppKey) {
+		subscribe(locks, 'lock', handleEvent)
+		subscribe(switches, 'switch', handleEvent)
+		subscribe(dimmers, 'switch', handleEvent)
+		subscribe(dimmers, 'level', handleEvent)
+		subscribe(momentaries, 'momentary', handleEvent)
+		subscribe(contacts, 'contact', handleEvent)
+		subscribe(presence, 'presence', handleEvent)
+		subscribe(motion, 'motion', handleEvent)
+		subscribe(temperature, 'temperature', handleEvent)
+		subscribe(humidity, 'humidity', handleEvent)
 
-	// I care about battery too
-	subscribe(locks, 'battery', handleEvent)
-	subscribe(motion, 'battery', handleEvent)
-	subscribe(temperature, 'battery', handleEvent)
-	subscribe(humidity, 'battery', handleEvent)
-	subscribe(presence, 'battery', handleEvent)
-	subscribe(contacts, 'battery', handleEvent)
+		// I care about battery too
+		subscribe(locks, 'battery', handleEvent)
+		subscribe(motion, 'battery', handleEvent)
+		subscribe(temperature, 'battery', handleEvent)
+		subscribe(humidity, 'battery', handleEvent)
+		subscribe(presence, 'battery', handleEvent)
+		subscribe(contacts, 'battery', handleEvent)
+	}
 }
 
 def subscribeDevice(device) {
@@ -293,13 +298,13 @@ def pusherPost(event, channel, data) {
 	def bodyData = new groovy.json.JsonBuilder(data).toString()
 	def body = new groovy.json.JsonBuilder([name: event, data: bodyData, channel: channel]).toString()
 
-	def path = '/apps/93248/events'
+	def path = "/apps/${pusherAppId}/events"
 	def timestamp = (int)now()/1000
 	def bodyMD5 = generateMD5(body)
 
 	def query = "POST\n" +
 		"${path}\n" +
-		"auth_key=c33d132d225427a60024" +
+		"auth_key=${pusherAppKey}" +
 		"&auth_timestamp=${timestamp}" +
 		"&auth_version=1.0" +
 		"&body_md5=${bodyMD5}"
@@ -307,11 +312,11 @@ def pusherPost(event, channel, data) {
 	def params = [
 		uri: "http://api.pusherapp.com${path}",
 		query: [
-			auth_key: 'c33d132d225427a60024',
+			auth_key: pusherAppKey,
 			auth_timestamp: timestamp,
 			auth_version: '1.0',
 			body_md5: bodyMD5,
-			auth_signature: hmac_sha256('50b60e184f62252abfd6', query)
+			auth_signature: hmac_sha256(pusherAppSecret, query)
 		],
 		body: body,
 		headers: [
@@ -477,6 +482,7 @@ def thePage() {
 				uri: 'https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/',
 				access_token: '${state.accessToken}',
 				refresh: ${interval},
+				pusher_app: ${pusherAppKey},
 			};
 			Action.start();
 		});

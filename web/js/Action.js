@@ -480,10 +480,10 @@ Action.updateData = function() {
 			Action.devices.add(mode, opts);
 			Action.devices.add(weather, opts);
 
-			if (Action.config.refresh) {
-				Action.refreshTimeout = _.delay(Action.updateData, Action.config.refresh * 60 * 1000);
-			} else if (Action.config.pusher_app) {
+			if (Action.config.pusher_app) {
 				Action.setupPusher();
+			} else if (Action.config.refresh) {
+				Action.refreshTimeout = _.delay(Action.updateData, Action.config.refresh * 60 * 1000);
 			}
 		},
 	});
@@ -496,7 +496,7 @@ Action.setupPusher = function() {
 		}
 	};
 
-	var pusher = new Pusher('c33d132d225427a60024');
+	var pusher = new Pusher(Action.config.pusher_app);
 	var channel = pusher.subscribe('devices');
 	channel.bind('device_update', Action.pusherDeviceUpdate);
 };
