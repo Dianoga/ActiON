@@ -36,17 +36,6 @@ definition(
 
 preferences {
 	page(name: "selectDevices", title: "Devices", install: false, unintall: true, nextPage: "selectPhrases") {
-
-		section("About") {
-			paragraph "ActiON Dashboard is a web application dashboard for your devices. \n" +
-			"There is no need to install SmartThings Mobile application on devices that will run ActiON Dashboard. \n" +
-			"Tap SmartApp icon to print the ActiON Dashboard URL to the logs or SMS number specified in app preferences."
-			paragraph "Version 3.0.2\n\n" +
-			"http://github.com/625alex/ActiON-Dashboard\n\n" +
-			"Donations accepted via PayPal at alex.smart.things@gmail.com. \n" +
-			"Copyright © 2014 Alex Malikov"
-		}
-
 		section("Allow control of these things...") {
 			input "switches", "capability.switch", title: "Which Switches?", multiple: true, required: false
 			input "dimmers", "capability.switchLevel", title: "Which Dimmers?", multiple: true, required: false
@@ -263,6 +252,105 @@ def initialize() {
 	if(link3url) {
 		state.links.push([id: '3', name: link3title, status: link3url, type: 'link']);
 	}
+
+	subscribe(locks, 'lock', handleEvent)
+	subscribe(switches, 'switch', handleEvent)
+	subscribe(dimmers, 'switch', handleEvent)
+	subscribe(dimmers, 'level', handleEvent)
+	subscribe(momentaries, 'momentary', handleEvent)
+	subscribe(contacts, 'contact', handleEvent)
+	subscribe(presence, 'presence', handleEvent)
+	subscribe(motion, 'motion', handleEvent)
+	subscribe(temperature, 'temperature', handleEvent)
+	subscribe(humidity, 'humidity', handleEvent)
+
+	// I care about battery too
+	subscribe(locks, 'battery', handleEvent)
+	subscribe(motion, 'battery', handleEvent)
+	subscribe(temperature, 'battery', handleEvent)
+	subscribe(humidity, 'battery', handleEvent)
+	subscribe(presence, 'battery', handleEvent)
+	subscribe(contacts, 'battery', handleEvent)
+}
+
+def subscribeDevice(device) {
+	device.supportedAttributes.each {
+		subscribe(device, "$it", handleEvent)
+	}
+}
+
+def handleEvent(event) {
+	def data = [
+		id: event.deviceId,
+		name: event.name,
+		value: event.value
+	]
+
+	pusherPost('device_update', 'devices', data)
+}
+
+def pusherPost(event, channel, data) {
+	def bodyData = new groovy.json.JsonBuilder(data).toString()
+	def body = new groovy.json.JsonBuilder([name: event, data: bodyData, channel: channel]).toString()
+
+	def path = '/apps/93248/events'
+	def timestamp = (int)now()/1000
+	def bodyMD5 = generateMD5(body)
+
+	def query = "POST\n" +
+		"${path}\n" +
+		"auth_key=c33d132d225427a60024" +
+		"&auth_timestamp=${timestamp}" +
+		"&auth_version=1.0" +
+		"&body_md5=${bodyMD5}"
+
+	log.debug "Query to sign: $query"
+
+	def params = [
+		uri: "http://api.pusherapp.com${path}",
+		query: [
+			auth_key: 'c33d132d225427a60024',
+			auth_timestamp: timestamp,
+			auth_version: '1.0',
+			body_md5: bodyMD5,
+			auth_signature: hmac_sha256('50b60e184f62252abfd6', query)
+		],
+		body: body,
+		headers: [
+			'Content-type': 'application/json'
+		]
+	]
+
+	log.debug "Params: $params"
+	httpPost(params)
+}
+
+def generateMD5(String s) {
+	def digest = java.security.MessageDigest.getInstance("MD5")
+	digest.update(s.bytes);
+	new java.math.BigInteger(1, digest.digest()).toString(16).padLeft(32, '0')
+}
+
+def hmac_sha256(String secretKey, String data) {
+	try {
+		def secretKeySpec = new javax.crypto.spec.SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256")
+		def mac = javax.crypto.Mac.getInstance("HmacSHA256")
+		mac.init(secretKeySpec)
+		def digest = mac.doFinal(data.getBytes("UTF-8"))
+		return byteArrayToString(digest)
+	} catch (java.security.InvalidKeyException e) {
+		log.error "Invalid key exception while converting to HMac SHA256"
+	}
+}
+
+private def byteArrayToString(byte[] data) {
+	def bigInteger = new BigInteger(1, data)
+	def hash = bigInteger.toString(16)
+	//Zero pad it
+	while (hash.length() < 64) {
+ 		hash = "0" + hash
+	}
+ 	return hash
 }
 
 def getURL(e) {

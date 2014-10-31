@@ -219,12 +219,16 @@ Action.DimmerView = Action.SwitchView.extend({
 		});
 
 		this.$el.on('slidestop', _.bind(this.dimmerClick, this));
+
+		this.events['click .full-width-slider'] = function(event) {
+			event.stopPropagation();
+		};
 	},
 
 	dimmerClick: function(event) {
 		event.stopPropagation();
 		this.model.sendCommand(this.model.get('level'));
-	}
+	},
 });
 
 Action.PresenceView = Action.DeviceView.extend({
@@ -475,7 +479,7 @@ Action.sendCommand = function(id, type, value, complete) {
 		},
 		complete: complete || function() {}
 	});
-}
+};
 
 Action.addInitializer(function() {
 	Action.devices = new Action.Devices();
