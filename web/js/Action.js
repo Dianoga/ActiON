@@ -317,7 +317,12 @@ Action.LinkView = Action.DeviceView.extend({
 Action.TemperatureView = Action.DeviceView.extend({
 	initialize: function() {
 		this.bindings = _.extend({}, this.bindings, {
-			'.st-icon': 'status',
+			'.st-icon': {
+				observe: 'status',
+				onGet: function(val) {
+					return val + '\xb0';
+				},
+			}
 		});
 	}
 });
@@ -380,7 +385,18 @@ Action.ModeView = Action.DeviceView.extend({
 	}
 });
 
-Action.HumidityView = Action.TemperatureView.extend();
+Action.HumidityView = Action.TemperatureView.extend({
+	initialize: function() {
+		this.bindings = _.extend({}, this.bindings, {
+			'.st-icon': {
+				observe: 'status',
+				onGet: function(val) {
+					return val + '%';
+				},
+			}
+		});
+	}
+});
 
 Action.WeatherView = Action.DeviceView.extend({
 	bindings: {
