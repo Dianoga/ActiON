@@ -1,17 +1,8 @@
 /**
- *  ActiON Dashboard 3.0.2
+ *  Reaction Dashboard
+ *  Inspired by the very excellent ActiON dashboard by Alex Alikov
  *
- *  ActiON Dashboard is a web application to contol and view status of your devices.
- *  The dashboard is optimized for mobile devices as well as large screens.
- *  Once the dashboard url is generated, it could be used in any modern browser.
- *  There is no need to install SmartThings Mobile application on the device that will run the dashboard.
- *
- *  http://github.com/625alex/ActiON-Dashboard
- *
- *  Donations accepted via PayPal at alex.smart.things@gmail.com
- *
- *  Copyright © 2014 Alex Malikov
- *
+ *  A realtime dashboard of your SmartThings setup.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -24,10 +15,10 @@
  *
  */
 definition(
-	name: "ReactiON Dashboard",
+	name: "Reaction Dashboard",
 	namespace: "dianoga",
 	author: "Brian Steere, Alex Malikov",
-	description: "Self contained web dashboard with optional superpowers.",
+	description: "Self contained web dashboard with superpowers.",
 	category: "Convenience",
 	iconUrl: "https://s3.amazonaws.com/smartthings-device-icons/unknown/thing/thing-circle.png",
 	iconX2Url: "https://s3.amazonaws.com/smartthings-device-icons/unknown/thing/thing-circle@2x.png",
@@ -234,6 +225,8 @@ def updated() {
 	log.debug "Updated with settings: ${settings}"
 
 	unsubscribe()
+	unschedule()
+
 	initialize()
 }
 
@@ -268,6 +261,8 @@ def initialize() {
 		subscribe(temperature, 'temperature', handleEvent)
 		subscribe(humidity, 'humidity', handleEvent)
 
+		subscribe(location, handleMode)
+
 		// I care about battery too
 		subscribe(locks, 'battery', handleEvent)
 		subscribe(motion, 'battery', handleEvent)
@@ -278,10 +273,8 @@ def initialize() {
 	}
 }
 
-def subscribeDevice(device) {
-	device.supportedAttributes.each {
-		subscribe(device, "$it", handleEvent)
-	}
+def handleMode(event) {
+	pusherPost('device_update', 'devices', [id: 'mode', name: 'status', value: location.mode])
 }
 
 def handleEvent(event) {
@@ -418,6 +411,7 @@ def data() {
 
 	if(showMode) {
 		things.mode = [
+			id: 'mode',
 			type: 'mode',
 			status: location.mode.toString(),
 			modes: location.modes?.collect{it.name}
