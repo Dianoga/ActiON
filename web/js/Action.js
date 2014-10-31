@@ -4,6 +4,15 @@ Action.Device = Backbone.Model.extend({
 	initialize: function() {
 		this.set('id', this.get('type') + '_' + this.get('id'));
 		this.set('updating', false);
+
+		if (this.primary) {
+			this.listenTo(this, 'change:' + this.primary, this.setStatus);
+			this.setStatus();
+		}
+	},
+
+	setStatus: function() {
+		this.set('status', this.get(this.primary));
 	},
 
 	sendCommand: function(value, type) {
@@ -34,22 +43,30 @@ Action.DeviceTypes = Backbone.Collection.extend({
 	}
 });
 
-Action.Contact = Action.Device.extend();
+Action.Contact = Action.Device.extend({
+	primary: 'contact'
+});
 Action.Contacts = Action.DeviceTypes.extend({
 	model: Action.Contact,
 });
 
-Action.Dimmer = Action.Device.extend();
+Action.Dimmer = Action.Device.extend({
+	primary: 'switch'
+});
 Action.Dimmers = Action.DeviceTypes.extend({
 	model: Action.Dimmer,
 });
 
-Action.Humidity = Action.Device.extend();
+Action.Humidity = Action.Device.extend({
+	primary: 'humidity'
+});
 Action.Humidities = Action.DeviceTypes.extend({
 	model: Action.Humidity,
 });
 
-Action.Lock = Action.Device.extend();
+Action.Lock = Action.Device.extend({
+	primary: 'lock'
+});
 Action.Locks = Action.DeviceTypes.extend({
 	model: Action.Lock,
 });
@@ -64,22 +81,30 @@ Action.Momentaries = Action.DeviceTypes.extend({
 	model: Action.Momentary,
 });
 
-Action.Motion = Action.Device.extend();
+Action.Motion = Action.Device.extend({
+	primary: 'motion'
+});
 Action.Motions = Action.DeviceTypes.extend({
 	model: Action.Motion,
 });
 
-Action.Presence = Action.Device.extend();
+Action.Presence = Action.Device.extend({
+	primary: 'presence'
+});
 Action.Presences = Action.DeviceTypes.extend({
 	model: Action.Presence,
 });
 
-Action.Switch = Action.Device.extend();
+Action.Switch = Action.Device.extend({
+	primary: 'switch'
+});
 Action.Switches = Action.DeviceTypes.extend({
 	model: Action.Switch,
 });
 
-Action.Temperature = Action.Device.extend();
+Action.Temperature = Action.Device.extend({
+	primary: 'temperature'
+});
 Action.Temperatures = Action.DeviceTypes.extend({
 	model: Action.Temperature,
 });
@@ -416,15 +441,7 @@ Action.DevicesView = Marionette.CollectionView.extend({
 
 	},
 
-	onRender: function() {
-		// this.$el.packery({
-		// 	itemSelector: '.st-tile',
-		// });
-
-		// this.listenTo(this, 'childview:show', function(view) {
-		// 	this.$el.packery('reloadItems').packery();
-		// });
-	}
+	onRender: function() {}
 });
 
 
