@@ -328,6 +328,8 @@ Action.ModeView = Action.DeviceView.extend({
 			'.st-icon': {
 				observe: 'status',
 				update: function($el, val, model) {
+					$('phrasePopupMenu').popup('destroy');
+
 					var link = $('<a href="#modePopupMenu" data-rel="popup" data-transition="slideup" />').text(val);
 					var menu = $('<div data-role="popup" id="modePopupMenu" data-theme="b"/>');
 					var menuUl = $('<ul data-role="listview" data-insert="true" />');
@@ -341,7 +343,7 @@ Action.ModeView = Action.DeviceView.extend({
 				}
 			},
 			'.st-phrases': {
-				observe: 'status',
+				observe: 'id',
 				update: function($el, val, model) {
 					var link = $('<a href="#phrasePopupMenu" data-rel="popup" data-transition="slideup" />').text('Hello Home');
 					var menu = $('<div data-role="popup" id="phrasePopupMenu" data-theme="b"/>');
@@ -360,7 +362,7 @@ Action.ModeView = Action.DeviceView.extend({
 
 	onRender: function() {
 		this.stickit();
-		$('#modePopupMenu').on('click', 'a', _.bind(this.changeMode, this));
+		$('body').on('click', '#modePopupMenu a', _.bind(this.changeMode, this));
 		$('#phrasePopupMenu').on('click', 'a', _.bind(this.changePhrase, this));
 
 		this.listenTo(this.model, 'change:updating', function() {
