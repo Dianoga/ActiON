@@ -394,14 +394,14 @@ def list() {
 def data() {
 	def things = [
 		locks: locks?.collect{[type: "lock", id: it.id, name: it.displayName, lock: it.currentLock, battery: it.currentBattery ]}?.sort{it.name},
-		switches: switches?.collect{[type: "switch", id: it.id, name: it.displayName, status: it.currentValue('switch')]}?.sort{it.name},
-		dimmers: dimmers?.collect{[type: "dimmer", id: it.id, name: it.displayName, status: it.currentValue('switch'), level: it.currentValue('level')]}?.sort{it.name},
+		switches: switches?.collect{[type: "switch", id: it.id, name: it.displayName, switch: it.currentSwitch ]}?.sort{it.name},
+		dimmers: dimmers?.collect{[type: "dimmer", id: it.id, name: it.displayName, switch: it.currentSwitch, level: it.currentLevel]}?.sort{it.name},
 		momentary: momentaries?.collect{[type: "momentary", id: it.id, name: it.displayName]}?.sort{it.name},
-		contacts: contacts?.collect{[type: "contact", id: it.id, name: it.displayName, status: it.currentValue('contact')]}?.sort{it.name},
-		presence: presence?.collect{[type: "presence", id: it.id, name: it.displayName, status: it.currentValue('presence')]}?.sort{it.name},
-		motion: motion?.collect{[type: "motion", id: it.id, name: it.displayName, status: it.currentValue('motion')]}?.sort{it.name},
-		temperature: temperature?.collect{[type: "temperature", id: it.id, name: it.displayName, status: roundNumber(it.currentValue('temperature'), "°")]}?.sort{it.name},
-		humidity: humidity?.collect{[type: "humidity", id: it.id, name: it.displayName, status: roundNumber(it.currentValue('humidity'), "%")]}?.sort{it.name},
+		contacts: contacts?.collect{[type: "contact", id: it.id, name: it.displayName, contact: it.currentContact, battery: it.currentBattery]}?.sort{it.name},
+		presence: presence?.collect{[type: "presence", id: it.id, name: it.displayName, presence: it.currentPresence, battery: it.currentBattery]}?.sort{it.name},
+		motion: motion?.collect{[type: "motion", id: it.id, name: it.displayName, motion: it.currentMotion, battery: it.currentBattery]}?.sort{it.name},
+		temperature: temperature?.collect{[type: "temperature", id: it.id, name: it.displayName, temperature: it.currentTemperature, battery: it.currentBattery]}?.sort{it.name},
+		humidity: humidity?.collect{[type: "humidity", id: it.id, name: it.displayName, humidity: it.currentHumidity, battery: it.currentBattery]}?.sort{it.name},
 		links: state.links,
 	]
 
