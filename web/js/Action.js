@@ -2,6 +2,7 @@ var Action = new Backbone.Marionette.Application();
 
 Action.Device = Backbone.Model.extend({
 	initialize: function() {
+		this.set('device_id', this.get('id'));
 		this.set('id', this.get('type') + '_' + this.get('id'));
 		this.set('updating', false);
 
@@ -22,7 +23,9 @@ Action.Device = Backbone.Model.extend({
 		var id = model.get('id').split('_')[1];
 		var type = type || model.get('type');
 		Action.sendCommand(id, type, value, function() {
-			Action.updateData();
+			if (!Action.config.pusher_app) {
+				Action.updateData();
+			}
 		});
 	}
 });
@@ -479,9 +482,33 @@ Action.updateData = function() {
 
 			if (Action.config.refresh) {
 				Action.refreshTimeout = _.delay(Action.updateData, Action.config.refresh * 60 * 1000);
+			} else if (Action.config.pusher_app) {
+				Action.setupPusher();
 			}
 		},
 	});
+};
+
+Action.setupPusher = function() {
+	Pusher.log = function(message) {
+		if (window.console && window.console.log) {
+			window.console.log(message);
+		}
+	};
+
+	var pusher = new Pusher('c33d132d225427a60024');
+	var channel = pusher.subscribe('devices');
+	channel.bind('device_update', Action.pusherDeviceUpdate);
+};
+
+Action.pusherDeviceUpdate = function(data) {
+	var device = Action.devices.findWhere({
+		device_id: data.id
+	});
+	if (device) {
+		device.set(data.name, data.value);
+		device.set('updating', false);
+	}
 };
 
 Action.sendCommand = function(id, type, value, complete) {
