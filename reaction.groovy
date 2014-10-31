@@ -386,6 +386,8 @@ def scheduledWeatherRefresh() {
 	state.weather = [:]
 	state.weather.conditions = conditions.current_observation
 	state.weather.astronomy = astronomy.moon_phase
+
+	pusherPost('device_update', 'devices', [id: 'weather', name: 'status', value: state.weather]);
 }
 
 def index() {
@@ -475,6 +477,7 @@ def thePage() {
 
 	<link rel='stylesheet' href='//rawgit.com/Dianoga/ActiON/master/web/css/app.css' />
 	<script type='text/javascript' src='//rawgit.com/Dianoga/ActiON/master/web/js/Action.js'></script>
+	<script type='text/javascript' src='//js.pusher.com/2.2/pusher.min.js'></script>
 
 	<script type='text/javascript'>
 		\$().ready(function() {
@@ -482,7 +485,7 @@ def thePage() {
 				uri: 'https://graph.api.smartthings.com/api/smartapps/installations/${app.id}/',
 				access_token: '${state.accessToken}',
 				refresh: ${interval},
-				pusher_app: ${pusherAppKey},
+				pusher_app: '${pusherAppKey}',
 			};
 			Action.start();
 		});
