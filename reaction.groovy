@@ -304,8 +304,6 @@ def pusherPost(event, channel, data) {
 		"&auth_version=1.0" +
 		"&body_md5=${bodyMD5}"
 
-	log.debug "Query to sign: $query"
-
 	def params = [
 		uri: "http://api.pusherapp.com${path}",
 		query: [
