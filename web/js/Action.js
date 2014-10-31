@@ -166,6 +166,16 @@ Action.Weather = Action.Device.extend({
 
 	initialize: function() {
 		this.set('id', 'weather');
+		this.set('device_id', 'weather');
+		this.setup();
+
+		this.listenTo(this, 'change:status', this.setup);
+	},
+
+	setup: function() {
+		var status = this.get('status');
+		this.set(_.extend(status.conditions, status.astronomy));
+
 		this.set('location', this.get('display_location').full);
 		this.set('skycon', this.weatherIcons[this.get('icon')]);
 
@@ -469,7 +479,7 @@ Action.updateData = function() {
 			Action.switches.set(new Action.Switches(data.switches).models);
 			Action.temperatures.set(new Action.Temperatures(data.temperature).models);
 
-			var weather = new Action.Weather(_.extend(data.weather.status.conditions, data.weather.status.astronomy));
+			var weather = new Action.Weather(data.weather);
 			var mode = new Action.Mode(_.extend(data.hellohome, data.mode));
 
 			var opts = {
@@ -490,12 +500,6 @@ Action.updateData = function() {
 };
 
 Action.setupPusher = function() {
-	Pusher.log = function(message) {
-		if (window.console && window.console.log) {
-			window.console.log(message);
-		}
-	};
-
 	var pusher = new Pusher(Action.config.pusher_app);
 	var channel = pusher.subscribe('devices');
 	channel.bind('device_update', Action.pusherDeviceUpdate);
