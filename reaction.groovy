@@ -307,7 +307,7 @@ def list() {
 
 def data() {
 	def things = [
-		locks: locks?.collect{[type: "lock", id: it.id, name: it.displayName, status: it.currentValue('lock') == "locked" ? "locked" : "unlocked"]}?.sort{it.name},
+		locks: locks?.collect{[type: "lock", id: it.id, name: it.displayName, lock: it.currentLock, battery: it.currentBattery ]}?.sort{it.name},
 		switches: switches?.collect{[type: "switch", id: it.id, name: it.displayName, status: it.currentValue('switch')]}?.sort{it.name},
 		dimmers: dimmers?.collect{[type: "dimmer", id: it.id, name: it.displayName, status: it.currentValue('switch'), level: it.currentValue('level')]}?.sort{it.name},
 		momentary: momentaries?.collect{[type: "momentary", id: it.id, name: it.displayName]}?.sort{it.name},
