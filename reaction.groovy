@@ -455,10 +455,10 @@ def thePage() {
 	<meta name='apple-mobile-web-app-capable' content='yes' />
 	<meta name='apple-mobile-web-app-status-bar-style' content='black' />
 
-	<link rel='icon' sizes='152x152' href='//github.com/Dianoga/ActiON/blob/master/web/images/touch-icon-152.png'>
-	<link rel='icon' sizes='76x76' href='//github.com/Dianoga/ActiON/blob/master/web/images/touch-icon-76.png'>
-	<link rel='apple-touch-icon' sizes='152x152' href='//github.com/Dianoga/ActiON/blob/master/web/images/touch-icon-152.png'>
-	<link rel='apple-touch-icon' sizes='76x76' href='//github.com/Dianoga/ActiON/blob/master/web/images/touch-icon-76.png'>
+	<link rel='icon' sizes='152x152' href='//rawgit.com/Dianoga/ActiON/master/web/images/touch-icon-152.png'>
+	<link rel='icon' sizes='76x76' href='//rawgit.com/Dianoga/ActiON/master/web/images/touch-icon-76.png'>
+	<link rel='apple-touch-icon' sizes='152x152' href='//rawgit.com/Dianoga/ActiON/master/web/images/touch-icon-152.png'>
+	<link rel='apple-touch-icon' sizes='76x76' href='//rawgit.com/Dianoga/ActiON/master/web/images/touch-icon-76.png'>
 	<title>ReAction</title>
 
 	<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
