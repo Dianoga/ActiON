@@ -208,7 +208,6 @@ Action.DeviceView = Marionette.ItemView.extend({
 	icons: {},
 
 	onRender: function() {
-		this.$el.enhanceWithin();
 		this.stickit();
 
 		this.listenTo(this.model, 'change:updating', function() {
@@ -251,7 +250,7 @@ Action.DimmerView = Action.SwitchView.extend({
 			'[name=dimmer]': {
 				observe: 'level',
 				update: function($el, val) {
-					$el.val(val).slider('refresh');
+
 				}
 			},
 		});
@@ -333,33 +332,13 @@ Action.ModeView = Action.DeviceView.extend({
 			'.st-icon': {
 				observe: 'status',
 				update: function($el, val, model) {
-					$('phrasePopupMenu').popup('destroy');
 
-					var link = $('<a href="#modePopupMenu" data-rel="popup" data-transition="slideup" />').text(val);
-					var menu = $('<div data-role="popup" id="modePopupMenu" data-theme="b"/>');
-					var menuUl = $('<ul data-role="listview" data-insert="true" />');
-
-					_.each(model.get('modes'), function(mode) {
-						menuUl.append('<li><a href="#" data-rel="back" data-mode="' + mode + '">' + mode + '</a></li>');
-					});
-
-					menu.append(menuUl);
-					$el.empty().append(link).append(menu).enhanceWithin();
 				}
 			},
 			'.st-phrases': {
 				observe: 'id',
 				update: function($el, val, model) {
-					var link = $('<a href="#phrasePopupMenu" data-rel="popup" data-transition="slideup" />').text('Hello Home');
-					var menu = $('<div data-role="popup" id="phrasePopupMenu" data-theme="b"/>');
-					var menuUl = $('<ul data-role="listview" data-insert="true" />');
 
-					_.each(model.get('phrases'), function(phrase) {
-						menuUl.append('<li><a href="#" data-rel="back" data-phrase="' + phrase + '">' + phrase + '</a></li>');
-					});
-
-					menu.append(menuUl);
-					$el.empty().append(link).append(menu).enhanceWithin();
 				}
 			},
 		});
@@ -367,8 +346,6 @@ Action.ModeView = Action.DeviceView.extend({
 
 	onRender: function() {
 		this.stickit();
-		$('body').on('click', '#modePopupMenu a', _.bind(this.changeMode, this));
-		$('#phrasePopupMenu').on('click', 'a', _.bind(this.changePhrase, this));
 
 		this.listenTo(this.model, 'change:updating', function() {
 			var updating = this.model.get('updating');
