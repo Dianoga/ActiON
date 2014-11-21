@@ -70,21 +70,22 @@ Action.Contacts = Action.DeviceTypes.extend({
 });
 
 Action.Dimmer = Action.Device.extend({
-	primary: 'switch'
+	primary: 'switch',
+	inactive: 'off',
 });
 Action.Dimmers = Action.DeviceTypes.extend({
 	model: Action.Dimmer,
 });
 
 Action.Humidity = Action.Device.extend({
-	primary: 'humidity'
+	primary: 'humidity',
 });
 Action.Humidities = Action.DeviceTypes.extend({
 	model: Action.Humidity,
 });
 
 Action.Lock = Action.Device.extend({
-	primary: 'lock'
+	primary: 'lock',
 });
 Action.Locks = Action.DeviceTypes.extend({
 	model: Action.Lock,
@@ -101,28 +102,31 @@ Action.Momentaries = Action.DeviceTypes.extend({
 });
 
 Action.Motion = Action.Device.extend({
-	primary: 'motion'
+	primary: 'motion',
+	inactive: 'inactive',
 });
 Action.Motions = Action.DeviceTypes.extend({
 	model: Action.Motion,
 });
 
 Action.Presence = Action.Device.extend({
-	primary: 'presence'
+	primary: 'presence',
+	inactive: 'present',
 });
 Action.Presences = Action.DeviceTypes.extend({
 	model: Action.Presence,
 });
 
 Action.Switch = Action.Device.extend({
-	primary: 'switch'
+	primary: 'switch',
+	inactive: 'off',
 });
 Action.Switches = Action.DeviceTypes.extend({
 	model: Action.Switch,
 });
 
 Action.Temperature = Action.Device.extend({
-	primary: 'temperature'
+	primary: 'temperature',
 });
 Action.Temperatures = Action.DeviceTypes.extend({
 	model: Action.Temperature,

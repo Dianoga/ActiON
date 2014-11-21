@@ -1,4 +1,5 @@
 @import 'flex';
+@import 'vars';
 
 body {
 	background: #1d1d1d;
@@ -46,20 +47,20 @@ body {
 
 	// Colors
 	.contact & { background-color: #9c27b0; }
-	.switch & { background-color: #ff5722; }
-	.temperature & { background-color: #3f51b5; }
-	.humidity & { background-color: #00bcd4; }
+	.switch & { background-color: $attention-color; }
+	.temperature & { background-color: $default-color; }
+	.humidity & { background-color: $default-color; }
 	.momentary & { background-color: #795548; }
-	.motion & { background-color: #607d8b; }
+	.motion & { background-color: $attention-color; }
 	.lock & { background-color: #e91e63; }
-	.presence & { background-color: #259b24; }
-	.dimmer & { background-color: #009688; }
+	.presence & { background-color: #6c7a89; }
+	.dimmer & { background-color: $attention-color; }
 	.link & { background-color: #ff9800; }
 	.refresh & { background-color: #3498db; }
-	.mode & { background-color: #34495e; }
-	.weather & { background-color: #03a9f4; }
+	.mode & { background-color: $tardis-blue; }
+	.weather & { background-color: $tardis-blue; }
 
-	.inactive & { background-color: #003865; }
+	.inactive & { background-color: $default-color; }
 }
 
 .updating {

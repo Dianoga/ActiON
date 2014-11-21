@@ -1,9 +1,9 @@
-/* line 3, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 4, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 body {
   background: #1d1d1d;
   font-family: 'Roboto Condensed', sans-serif; }
 
-/* line 11, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 12, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .r45, .contact .fa {
   -moz-transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
@@ -11,7 +11,7 @@ body {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg); }
 
-/* line 19, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 20, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .st-tile {
   float: left;
   position: relative;
@@ -24,7 +24,7 @@ body {
   transition-property: opacity;
   transition-duration: 0.3s; }
 
-/* line 35, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 36, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .st-tile-content {
   position: absolute;
   left: 5px;
@@ -44,58 +44,58 @@ body {
   -moz-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column; }
-  /* line 48, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 49, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .contact .st-tile-content {
     background-color: #9c27b0; }
-  /* line 49, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
-  .switch .st-tile-content {
-    background-color: #ff5722; }
   /* line 50, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
-  .temperature .st-tile-content {
-    background-color: #3f51b5; }
+  .switch .st-tile-content {
+    background-color: #96281b; }
   /* line 51, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
-  .humidity .st-tile-content {
-    background-color: #00bcd4; }
+  .temperature .st-tile-content {
+    background-color: #22313f; }
   /* line 52, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  .humidity .st-tile-content {
+    background-color: #22313f; }
+  /* line 53, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .momentary .st-tile-content {
     background-color: #795548; }
-  /* line 53, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
-  .motion .st-tile-content {
-    background-color: #607d8b; }
   /* line 54, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  .motion .st-tile-content {
+    background-color: #96281b; }
+  /* line 55, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .lock .st-tile-content {
     background-color: #e91e63; }
-  /* line 55, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
-  .presence .st-tile-content {
-    background-color: #259b24; }
   /* line 56, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
-  .dimmer .st-tile-content {
-    background-color: #009688; }
+  .presence .st-tile-content {
+    background-color: #6c7a89; }
   /* line 57, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  .dimmer .st-tile-content {
+    background-color: #96281b; }
+  /* line 58, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .link .st-tile-content {
     background-color: #ff9800; }
-  /* line 58, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 59, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .refresh .st-tile-content {
     background-color: #3498db; }
-  /* line 59, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
-  .mode .st-tile-content {
-    background-color: #34495e; }
   /* line 60, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
-  .weather .st-tile-content {
-    background-color: #03a9f4; }
-  /* line 62, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
-  .inactive .st-tile-content {
+  .mode .st-tile-content {
     background-color: #003865; }
+  /* line 61, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  .weather .st-tile-content {
+    background-color: #003865; }
+  /* line 63, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  .inactive .st-tile-content {
+    background-color: #22313f; }
 
-/* line 65, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 66, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .updating {
   opacity: 0.4; }
 
-/* line 69, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 70, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .s1x2, .weather {
   width: 20%; }
 
-/* line 73, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 74, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .st-title {
   font-size: 14px;
   line-height: 16px;
@@ -103,85 +103,85 @@ body {
   font-style: normal;
   text-shadow: none; }
 
-/* line 81, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 82, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .st-icon {
   margin: auto;
   text-align: center; }
-  /* line 85, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 86, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-icon .fa, .st-icon .wi {
     font-size: 3em; }
 
-/* line 95, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 96, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .temperature .st-icon {
   font-size: 2em;
   font-family: 'Overlock', sans-serif; }
 
-/* line 100, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 101, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .humidity .st-icon {
   font-size: 2em;
   font-family: 'Overlock', sans-serif; }
 
-/* line 106, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 107, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .link a {
   color: white; }
 
-/* line 112, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 113, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .mode .st-icon {
   font-size: 1.5em;
   top: 70%; }
-/* line 117, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 118, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .mode .st-phrases {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   text-align: center; }
-/* line 125, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 126, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .mode a {
   color: white;
   text-decoration: none; }
 
-/* line 134, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 135, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .weather .skycon {
   position: absolute;
   top: 35%;
   right: 20%; }
-/* line 140, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 141, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .weather .st-title {
   font-size: 1.1em; }
-/* line 144, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 145, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .weather .w-status {
   font-size: 0.95em;
   position: absolute;
   left: 1em; }
-/* line 150, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 151, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .weather .w-humidity {
   position: absolute;
   bottom: 1%;
   right: 1%;
   font-size: 0.9em; }
-/* line 157, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 158, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .weather .w-temperature {
   position: absolute;
   top: 40%;
   left: 20%;
   font-size: 2em; }
-/* line 164, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 165, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .weather .w-suntimes {
   font-size: 0.9em;
   position: absolute;
   bottom: 1%;
   left: 1%; }
 
-/* line 174, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 175, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .list-picker .jBox-content {
   padding: 0; }
-/* line 178, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 179, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .list-picker ul {
   padding: 0;
   margin: 0;
   border-top: 1px solid #aaa; }
-/* line 184, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 185, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .list-picker li {
   list-style: none;
   font-size: 1.1em;
@@ -189,116 +189,116 @@ body {
   padding: 0.5em 1em;
   background: #eee;
   border-bottom: 1px solid #aaa; }
-  /* line 192, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 193, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .list-picker li:hover {
     background: #ddd; }
 
-/* line 199, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+/* line 200, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
 .fa-map-marker-away:before {
   content: "\f041";
   opacity: 0.4; }
 
 @media only screen and (max-width: 480px) {
   /* Smartphone view: 3 tile */
-  /* line 206, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 207, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-tile {
     width: 33.333333333%;
     padding-bottom: 33.333333333%; }
 
-  /* line 211, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 212, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .s1x2, .weather {
     width: 66.666666667%; }
 
-  /* line 215, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 216, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-tile-content {
     left: 2px;
     right: 2px;
     top: 2px;
     bottom: 2px; }
 
-  /* line 221, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 222, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .ui-content {
     padding: 0; }
  }
 
 @media only screen and (max-width: 565px) and (min-width: 481px) {
   /* Tablet view: 4 tiles */
-  /* line 228, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 229, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-tile {
     width: 25%;
     padding-bottom: 25%; }
 
-  /* line 233, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 234, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .s1x2, .weather {
     width: 50%; }
 
-  /* line 237, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 238, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-tile-content {
     left: 2px;
     right: 2px;
     top: 2px;
     bottom: 2px; }
 
-  /* line 243, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 244, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .ui-content {
     padding: 0px; }
  }
 
 @media only screen and (max-width: 650px) and (min-width: 566px) {
   /* Tablet view: 5 tiles */
-  /* line 250, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 251, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-tile {
     width: 20%;
     padding-bottom: 20%; }
 
-  /* line 255, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 256, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .s1x2, .weather {
     width: 40%; }
 
-  /* line 259, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 260, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-tile-content {
     left: 2px;
     right: 2px;
     top: 2px;
     bottom: 2px; }
 
-  /* line 265, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 266, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .ui-content {
     padding: 0px; }
  }
 
 @media only screen and (max-width: 850px) and (min-width: 651px) {
   /* Small desktop / ipad view: 6 tiles */
-  /* line 273, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 274, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-tile {
     width: 16.666666667%;
     padding-bottom: 16.666666667%; }
 
-  /* line 278, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 279, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .s1x2, .weather {
     width: 33.333333333%; }
  }
 
 @media only screen and (max-width: 1050px) and (min-width: 851px) {
   /* Small desktop / ipad view: 7 tiles */
-  /* line 285, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 286, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-tile {
     width: 14.2%;
     padding-bottom: 14.2%; }
 
-  /* line 290, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 291, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .s1x2, .weather {
     width: 28.4%; }
  }
 
 @media only screen and (max-width: 1290px) and (min-width: 1051px) {
   /* Medium desktop: 8 tiles */
-  /* line 297, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 298, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .st-tile {
     width: 12.5%;
     padding-bottom: 12.5%; }
 
-  /* line 301, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
+  /* line 302, C:/Users/Brian/Projects/ActiON/web/scss/app.scss */
   .s1x2, .weather {
     width: 25%; }
  }
