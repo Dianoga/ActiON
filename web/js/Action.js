@@ -513,16 +513,16 @@ Action.updateData = function() {
 		success: function(data) {
 			console.log(data);
 
-			Action.contacts.set(new Action.Contacts(data.contacts).models);
 			Action.dimmers.set(new Action.Dimmers(data.dimmers).models);
-			Action.locks.set(new Action.Locks(data.locks).models);
-			Action.links.set(new Action.Links(data.links).models);
+			Action.switches.set(new Action.Switches(data.switches).models);
 			Action.momentaries.set(new Action.Momentaries(data.momentary).models);
+			Action.locks.set(new Action.Locks(data.locks).models);
+			Action.contacts.set(new Action.Contacts(data.contacts).models);
 			Action.motions.set(new Action.Motions(data.motion).models);
 			Action.presences.set(new Action.Presences(data.presence).models);
-			Action.switches.set(new Action.Switches(data.switches).models);
 			Action.temperatures.set(new Action.Temperatures(data.temperature).models);
 			Action.humidities.set(new Action.Humidities(data.humidity).models);
+			Action.links.set(new Action.Links(data.links).models);
 
 			var weather = new Action.Weather(data.weather);
 			var mode = new Action.Mode(_.extend(data.hellohome, data.mode));
