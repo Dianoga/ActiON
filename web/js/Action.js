@@ -16,13 +16,19 @@ Action.Device = Backbone.Model.extend({
 		this.set('status', this.get(this.primary));
 	},
 
-	sendCommand: function(value, type) {
+	sendCommand: function(value, type, wait) {
+		wait = wait === undefined ? true : wait;
+
 		var model = this;
 		model.set('updating', true);
 
 		var id = model.get('id').split('_')[1];
 		var type = type || model.get('type');
 		Action.sendCommand(id, type, value, function() {
+			if (!wait) {
+				model.set('updating', false);
+			}
+
 			if (!Action.config.pusher_app) {
 				Action.updateData();
 			}
@@ -323,11 +329,13 @@ Action.TemperatureView = Action.DeviceView.extend({
 });
 
 Action.ModeView = Action.DeviceView.extend({
-	initialize: function() {
-		this.bindings['.st-icon'] = {
-			observe: 'status',
-		};
+	events: {
+		'click .st-icon': 'showModePicker',
+		'click .st-phrases': 'showPhrasePicker',
+	},
 
+	initialize: function() {
+		this.bindings['.st-icon'] = 'status';
 	},
 
 	onRender: function() {
@@ -337,14 +345,51 @@ Action.ModeView = Action.DeviceView.extend({
 			var updating = this.model.get('updating');
 			this.$el.toggleClass('updating', updating);
 		});
+
+		this.jbox = new jBox('Modal', {
+			addClass: 'list-picker'
+		});
+	},
+
+	showModePicker: function(event) {
+		event.stopPropagation();
+		this.showPicker('mode');
+	},
+
+	showPhrasePicker: function(event) {
+		event.stopPropagation();
+		this.showPicker('phrase');
+	},
+
+	showPicker: function(type) {
+		if (type == 'mode') {
+			var method = _.bind(this.changeMode, this);
+			var things = this.model.get('modes');
+		} else {
+			var method = _.bind(this.changePhrase, this);
+			var things = this.model.get('phrases');
+		}
+
+		var content = $('<ul>');
+		_.each(things, function(val) {
+			var li = $('<li>').text(val);
+			li.on('click', method);
+			content.append(li);
+		});
+
+		this.jbox.setContent(content);
+		this.jbox.setTitle('Choose Mode');
+		this.jbox.open();
 	},
 
 	changeMode: function(event) {
-		this.model.sendCommand($(event.currentTarget).data().mode, 'mode');
+		this.model.sendCommand($(event.currentTarget).text(), 'mode');
+		this.jbox.close();
 	},
 
 	changePhrase: function(event) {
-		this.model.sendCommand($(event.currentTarget).data().phrase, 'hellohome');
+		this.model.sendCommand($(event.currentTarget).text(), 'hellohome', false);
+		this.jbox.close();
 	}
 });
 
