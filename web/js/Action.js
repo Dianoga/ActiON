@@ -9,11 +9,20 @@ Action.Device = Backbone.Model.extend({
 		if (this.primary) {
 			this.listenTo(this, 'change:' + this.primary, this.setStatus);
 			this.setStatus();
+
+			if (this.inactive) {
+				this.listenTo(this, 'change:' + this.primary, this.setInactive);
+				this.setInactive();
+			}
 		}
 	},
 
 	setStatus: function() {
 		this.set('status', this.get(this.primary));
+	},
+
+	setInactive: function() {
+		this.set('inactive', this.get(this.primary) == this.inactive);
 	},
 
 	sendCommand: function(value, type, wait) {
@@ -53,7 +62,8 @@ Action.DeviceTypes = Backbone.Collection.extend({
 });
 
 Action.Contact = Action.Device.extend({
-	primary: 'contact'
+	primary: 'contact',
+	inactive: 'closed',
 });
 Action.Contacts = Action.DeviceTypes.extend({
 	model: Action.Contact,
@@ -210,6 +220,11 @@ Action.DeviceView = Marionette.ItemView.extend({
 			observe: 'status',
 			update: 'getIcon',
 		},
+		':el': {
+			classes: {
+				'inactive': 'inactive',
+			},
+		}
 	},
 	icons: {},
 
