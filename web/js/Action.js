@@ -249,20 +249,16 @@ Action.DimmerView = Action.SwitchView.extend({
 		this.bindings = _.extend({}, this.bindings, {
 			'[name=dimmer]': {
 				observe: 'level',
-				update: function($el, val) {
-
-				}
 			},
 		});
 
-		this.$el.on('slidestop', _.bind(this.dimmerClick, this));
-
-		this.events['click .full-width-slider'] = function(event) {
+		this.events['change input'] = this.dimmerChange
+		this.events['click input'] = function(event) {
 			event.stopPropagation();
 		};
 	},
 
-	dimmerClick: function(event) {
+	dimmerChange: function(event) {
 		event.stopPropagation();
 		this.model.sendCommand(this.model.get('level'));
 	},
