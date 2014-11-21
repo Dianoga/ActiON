@@ -462,22 +462,14 @@ def thePage() {
 	<title>ReAction</title>
 
 	<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
-	<link rel='stylesheet' href='//code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css' />
+	<link href='//fonts.googleapis.com/css?family=Overlock|Roboto+Condensed:400,700' rel='stylesheet' type='text/css'>
+	<link rel='stylesheet' href='//rawgit.com/Dianoga/ActiON/master/web/css/third-party.css' />
 
-	<script type='text/javascript' src='//code.jquery.com/jquery-2.1.1.min.js'></script>
-	<script type='text/javascript' src='//code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js'></script>
-	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js'></script>
-	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js'></script>
-	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.2.2/backbone.marionette.min.js'></script>
-	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/backbone.stickit/0.8.0/backbone.stickit.min.js'></script>
-
-	<script type='text/javascript' src='//cdn.jsdelivr.net/coolclock/2.1.4/coolclock.min.js'></script>
-	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/packery/1.1.2/packery.pkgd.min.js'></script>
-	<script type='text/javascript' src='//cdn.rawgit.com/darkskyapp/skycons/master/skycons.js'></script>
+	<script type='text/javascript' src='//rawgit.com/Dianoga/ActiON/master/web/js//min/third-party.min.js'></script>
+	<script type='text/javascript' src='//js.pusher.com/2.2/pusher.min.js'></script>
 
 	<link rel='stylesheet' href='//rawgit.com/Dianoga/ActiON/master/web/css/app.css' />
 	<script type='text/javascript' src='//rawgit.com/Dianoga/ActiON/master/web/js/Action.js'></script>
-	<script type='text/javascript' src='//js.pusher.com/2.2/pusher.min.js'></script>
 
 	<script type='text/javascript'>
 		\$().ready(function() {
@@ -512,7 +504,7 @@ def thePage() {
 		<div class='st-tile-content'>
 			<div class='st-title'>Device</div>
 			<div class='st-icon'></div>
-			<div class='st-phrases'></div>
+			<div class='st-phrases'>Hello Home</div>
 		</div>
 	</script>
 	<script type='text/template' id='_st-weather'>
@@ -533,10 +525,8 @@ def thePage() {
 		<div class='st-tile-content'>
 			<div class='st-title'>Contact</div>
 			<div class='st-icon'><i class='fa'></i></div>
-			<div class='full-width-slider'>
-				<input name='dimmer' min='0' max='100' type='range' data-show-value='false'
-					data-mini='true' data-popup-enabled='true' data-disabled='false' data-highlight='true' step='5' />
-			</div>
+			<input name='dimmer' min='0' max='100' type='range' data-show-value='false'
+			data-mini='true' data-popup-enabled='true' data-disabled='false' data-highlight='true' step='5' />
 		</div>
 	</script>
 </body>
