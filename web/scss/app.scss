@@ -1,10 +1,11 @@
 @import 'flex';
 
 body {
+	background: #1d1d1d;
+	font-family: 'Roboto Condensed', sans-serif;
 }
 
 #container {
-	background: #1d1d1d;
 }
 
 .r45 {
@@ -91,12 +92,12 @@ body {
 
 .temperature .st-icon {
 	font-size: 2em;
-	top: 75%;
+	font-family: 'Overlock', sans-serif;
 }
 
 .humidity .st-icon {
 	font-size: 2em;
-	top: 75%;
+	font-family: 'Overlock', sans-serif;
 }
 
 .link {

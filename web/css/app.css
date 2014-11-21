@@ -1,5 +1,6 @@
-#container {
+body {
   background: #1d1d1d;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 .r45, .contact .fa {
@@ -109,12 +110,12 @@
 
 .temperature .st-icon {
   font-size: 2em;
-  top: 75%;
+  font-family: 'Overlock', sans-serif;
 }
 
 .humidity .st-icon {
   font-size: 2em;
-  top: 75%;
+  font-family: 'Overlock', sans-serif;
 }
 
 .link a {
