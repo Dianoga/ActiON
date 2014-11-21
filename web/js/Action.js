@@ -324,20 +324,10 @@ Action.TemperatureView = Action.DeviceView.extend({
 
 Action.ModeView = Action.DeviceView.extend({
 	initialize: function() {
-		this.bindings = _.extend({}, this.bindings, {
-			'.st-icon': {
-				observe: 'status',
-				update: function($el, val, model) {
+		this.bindings['.st-icon'] = {
+			observe: 'status',
+		};
 
-				}
-			},
-			'.st-phrases': {
-				observe: 'id',
-				update: function($el, val, model) {
-
-				}
-			},
-		});
 	},
 
 	onRender: function() {
