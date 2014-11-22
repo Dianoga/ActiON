@@ -5,3 +5,4 @@
 //@prepros-append ../third-party/backbone.stickit/backbone.stickit.js
 //@prepros-append ../third-party/skycons/skycons.js
 //@prepros-append ../third-party/jBox/jBox.js
+//@prepros-append ../third-party/jquery-visibility/jquery-visibility.js
