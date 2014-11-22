@@ -545,9 +545,11 @@ Action.updateData = function() {
 };
 
 Action.setupPusher = function() {
-	var pusher = new Pusher(Action.config.pusher_app);
-	var channel = pusher.subscribe('devices');
-	channel.bind('device_update', Action.pusherDeviceUpdate);
+	if (!Action.pusher || Action.pusher.connection.state == 'disconnected') {
+		Action.pusher = new Pusher(Action.config.pusher_app);
+		var channel = Action.pusher.subscribe('devices');
+		channel.bind('device_update', Action.pusherDeviceUpdate);
+	}
 };
 
 Action.pusherDeviceUpdate = function(data) {
@@ -599,4 +601,24 @@ Action.addInitializer(function() {
 	Action.container.show(new Action.DevicesView({
 		collection: Action.devices
 	}));
+
+	var updateVisibility = _.debounce(function() {
+		var state;
+		if (typeof document.hidden !== "undefined") {
+			state = "visibilityState";
+		} else if (typeof document.mozHidden !== "undefined") {
+			state = "mozVisibilityState";
+		} else if (typeof document.msHidden !== "undefined") {
+			state = "msVisibilityState";
+		} else if (typeof document.webkitHidden !== "undefined") {
+			state = "webkitVisibilityState";
+		}
+
+		if (document[state] == 'visible') {
+			Action.updateData();
+		}
+	}, 50);
+
+	$(document).on('show.visibility', updateVisibility);
+	$(document).on('hide.visibility', updateVisibility);
 });
