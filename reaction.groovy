@@ -446,6 +446,8 @@ def html() {
 }
 
 def thePage() {
+	def commit = 'e78953cb52a1164e99584839985cdc8a754e7c41'
+
 """
 <!DOCTYPE html>
 <html>
@@ -455,21 +457,21 @@ def thePage() {
 	<meta name='apple-mobile-web-app-capable' content='yes' />
 	<meta name='apple-mobile-web-app-status-bar-style' content='black' />
 
-	<link rel='icon' sizes='152x152' href='//rawgit.com/Dianoga/ActiON/master/web/images/touch-icon-152.png'>
-	<link rel='icon' sizes='76x76' href='//rawgit.com/Dianoga/ActiON/master/web/images/touch-icon-76.png'>
-	<link rel='apple-touch-icon' sizes='152x152' href='//rawgit.com/Dianoga/ActiON/master/web/images/touch-icon-152.png'>
-	<link rel='apple-touch-icon' sizes='76x76' href='//rawgit.com/Dianoga/ActiON/master/web/images/touch-icon-76.png'>
+	<link rel='icon' sizes='152x152' href='//cdn.rawgit.com/Dianoga/ActiON/${commit}/web/images/touch-icon-152.png'>
+	<link rel='icon' sizes='76x76' href='//cdn.rawgit.com/Dianoga/ActiON/${commit}/web/images/touch-icon-76.png'>
+	<link rel='apple-touch-icon' sizes='152x152' href='//cdn.rawgit.com/Dianoga/ActiON/${commit}/web/images/touch-icon-152.png'>
+	<link rel='apple-touch-icon' sizes='76x76' href='//cdn.rawgit.com/Dianoga/ActiON/${commit}/web/images/touch-icon-76.png'>
 	<title>ReAction</title>
 
 	<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 	<link href='//fonts.googleapis.com/css?family=Overlock|Roboto+Condensed:400,700' rel='stylesheet' type='text/css'>
-	<link rel='stylesheet' href='//rawgit.com/Dianoga/ActiON/master/web/css/third-party.css' />
+	<link rel='stylesheet' href='//cdn.rawgit.com/Dianoga/ActiON/${commit}/web/css/third-party.css' />
 
-	<script type='text/javascript' src='//rawgit.com/Dianoga/ActiON/master/web/js//min/third-party.min.js'></script>
+	<script type='text/javascript' src='//cdn.rawgit.com/Dianoga/ActiON/${commit}/web/js/min/third-party.min.js'></script>
 	<script type='text/javascript' src='//js.pusher.com/2.2/pusher.min.js'></script>
 
-	<link rel='stylesheet' href='//rawgit.com/Dianoga/ActiON/master/web/css/app.css' />
-	<script type='text/javascript' src='//rawgit.com/Dianoga/ActiON/master/web/js/Action.js'></script>
+	<link rel='stylesheet' href='//cdn.rawgit.com/Dianoga/ActiON/${commit}/web/css/app.css' />
+	<script type='text/javascript' src='//cdn.rawgit.com/Dianoga/ActiON/${commit}/web/js/Action.js'></script>
 
 	<script type='text/javascript'>
 		\$().ready(function() {
